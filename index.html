@@ -167,7 +167,7 @@ window.addEventListener('DOMContentLoaded', () => {
   .card {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 14px; padding: 20px 22px; cursor: pointer;
-    transition: all 0.2s; position: relative;
+    transition: all 0.2s; position: relative; margin-bottom: 16px;
   }
   .card:hover { border-color: var(--gold-border); background: var(--accent); }
   .card.copied { border-color: rgba(212,168,80,0.6); background: var(--gold-dim); }
@@ -175,8 +175,6 @@ window.addEventListener('DOMContentLoaded', () => {
     font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--gold); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
   }
-  .copy-hint { color: rgba(160,130,60,0.5); font-size: 11px; }
-  .copy-hint.done { color: var(--gold); }
   .card p { font-size: 14.5px; line-height: 1.75; color: #e0d8c8; }
 
   /* Search */
@@ -194,14 +192,34 @@ window.addEventListener('DOMContentLoaded', () => {
     color: var(--muted); font-size: 16px; pointer-events: none;
   }
 
-  /* Business name bar */
-  .biz-bar { background: var(--gold-dim); border: 1px solid var(--gold-border); border-radius: 14px; padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-  .biz-bar label { color: var(--gold); font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase; white-space: nowrap; font-weight: 600; }
-  .biz-bar input { flex: 1; min-width: 160px; background: rgba(255,255,255,0.06); border: 1px solid var(--gold-border); border-radius: 10px; padding: 10px 14px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border 0.2s; }
-  .biz-bar input:focus { border-color: var(--gold); }
-  .biz-bar input::placeholder { color: var(--muted); }
-  .biz-status { font-size: 11px; color: var(--gold); opacity: 0; transition: opacity 0.3s; white-space: nowrap; }
+  /* Quick Vault Panel */
+  .vault-panel { background: var(--gold-dim); border: 1px solid var(--gold-border); border-radius: 16px; padding: 18px 20px; margin-bottom: 24px; }
+  .vault-header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .vault-title { color: var(--gold); font-size: 12px; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 700; }
+  .vault-sub { color: var(--muted); font-size: 11px; flex: 1; min-width: 140px; }
+  .vault-fields { display: flex; flex-direction: column; gap: 10px; }
+  .vault-field { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .vault-field label { color: var(--gold); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; min-width: 170px; font-weight: 600; }
+  .vault-field input { flex: 1; min-width: 180px; background: rgba(255,255,255,0.06); border: 1px solid var(--gold-border); border-radius: 10px; padding: 9px 14px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13.5px; outline: none; transition: border 0.2s; }
+  .vault-field input:focus { border-color: var(--gold); }
+  .vault-field input::placeholder { color: var(--muted); }
+  .biz-status { font-size: 11px; color: var(--gold); opacity: 0; transition: opacity 0.3s; white-space: nowrap; font-weight: 600; }
   .biz-status.visible { opacity: 1; }
+
+  /* Dynamic variable inputs */
+  .dyn-inputs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.06); width: 100%; }
+  .dyn-field { display: flex; align-items: center; gap: 6px; background: rgba(212,168,80,0.07); border: 1px solid rgba(212,168,80,0.22); border-radius: 8px; padding: 5px 10px; flex: 1 1 100%; max-width: 100%; }
+  .dyn-label { color: var(--gold); font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; }
+  .dyn-input { background: transparent; border: none; border-bottom: 1px solid var(--gold-border); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none; width: 100%; padding: 2px 4px; min-height: 40px; }
+  .dyn-input::placeholder { color: rgba(160,144,112,0.45); font-size: 11px; }
+
+  /* Card action buttons */
+  .card-actions { display: flex; gap: 10px; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .btn-copy { flex: 1; padding: 14px 0; background: transparent; border: 1px solid var(--gold-border); border-radius: 10px; color: var(--gold); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; letter-spacing: 0.03em; }
+  .btn-copy:hover { background: var(--gold-dim); border-color: var(--gold); }
+  .btn-copy.done { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+  .btn-send { flex: 1; padding: 14px 0; background: #25d366; border: none; border-radius: 10px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; letter-spacing: 0.03em; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+  .btn-send:hover { opacity: 0.88; }
 
   /* Count */
   .count { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
@@ -225,6 +243,16 @@ window.addEventListener('DOMContentLoaded', () => {
   .install-banner p { flex: 1; font-size: 13px; color: #c8b880; line-height: 1.5; }
   .install-btn { padding: 8px 16px; background: var(--gold); color: #0f0e0c; border: none; border-radius: 100px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; font-family: 'DM Sans', sans-serif; }
   .install-dismiss { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 18px; padding: 4px; }
+
+  /* Collapsible tips accordion */
+  .tips-accordion { border: 1px solid var(--gold-border); border-radius: 14px; overflow: hidden; margin-bottom: 12px; }
+  .tips-accordion[open] .tips-chevron { display: inline-block; transform: rotate(180deg); }
+  .tips-summary { list-style: none; padding: 14px 20px; cursor: pointer; color: var(--gold); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; background: var(--gold-dim); display: flex; justify-content: space-between; align-items: center; user-select: none; }
+  .tips-summary::-webkit-details-marker { display: none; }
+  .tips-summary:hover { background: rgba(212,168,80,0.2); }
+  .tips-chevron { font-size: 14px; transition: transform 0.25s; display: inline-block; }
+  .tips-body { padding: 16px 0 4px; }
+  .tips-body .tip:last-child { margin-bottom: 0; }
 
   /* Footer */
   footer { text-align: center; margin-top: 60px; color: rgba(160,144,112,0.35); font-size: 11px; letter-spacing: 0.1em; }
@@ -270,11 +298,27 @@ window.addEventListener('DOMContentLoaded', () => {
     </div>
   </div>
 
-  <!-- Business Name Input -->
-  <div class="biz-bar">
-    <label for="bizNameInput">🏪 Your Business Name</label>
-    <input type="text" id="bizNameInput" placeholder="e.g. Lash by Zondra" oninput="applyBizName()"/>
-    <span class="biz-status" id="bizStatus">✓ Applied to all templates</span>
+  <!-- Quick Vault -->
+  <div class="vault-panel">
+    <div class="vault-header">
+      <span class="vault-title">⚡ Quick Vault</span>
+      <span class="vault-sub">Saved details auto-apply instantly. 🔒 100% Private: Your details are stored safely on your device and never sent to a server.</span>
+      <span class="biz-status" id="vaultStatus"></span>
+    </div>
+    <div class="vault-fields">
+      <div class="vault-field">
+        <label for="bizNameInput">🏪 Business Name</label>
+        <input type="text" id="bizNameInput" placeholder="e.g. Lash by Zondra" oninput="saveVault()"/>
+      </div>
+      <div class="vault-field">
+        <label for="bankingInput">🏦 Banking Details</label>
+        <input type="text" id="bankingInput" placeholder="e.g. FNB · Acc: 123456 · Ref: Your Name" oninput="saveVault()"/>
+      </div>
+      <div class="vault-field">
+        <label for="priceListInput">📋 Price List / Catalogue</label>
+        <input type="text" id="priceListInput" placeholder="e.g. selar.co/yourstore or website link" oninput="saveVault()"/>
+      </div>
+    </div>
   </div>
 
   <!-- Search -->
@@ -303,30 +347,35 @@ window.addEventListener('DOMContentLoaded', () => {
 
   <p class="section-label" style="margin-top:20px">✦ Pro Tips for Better Replies</p>
 
-  <div class="tip">
-    <div class="tip-title">Always personalise — greet by name</div>
-    <p>Replace [Name] with the customer's actual name every time. A personalised message builds instant trust and converts far better than a generic reply. Never start with "Hi there" when you know who you're speaking to.</p>
-  </div>
-  <div class="tip">
-    <div class="tip-title">Reply within 1 hour — speed wins sales</div>
-    <p>82% of customers expect a response within 10 minutes. You are 7× more likely to close a sale when you reply within the hour. Use these templates to respond fast even on your busiest days.</p>
-  </div>
-  <div class="tip">
-    <div class="tip-title">Always end with an open door</div>
-    <p>Close every message with a question or an invitation — "Does that work for you?", "Shall I go ahead?", or "Feel free to ask anything else!" This keeps the conversation alive and signals that you genuinely care.</p>
-  </div>
-  <div class="tip">
-    <div class="tip-title">Never leave a message on "seen"</div>
-    <p>67% of customers who feel ignored will find a competitor. Even a quick "Got your message, I'll get back to you shortly!" is better than silence. Use the "Be right back" template for exactly this situation.</p>
-  </div>
-  <div class="tip">
-    <div class="tip-title">Handle complaints with calm, not defence</div>
-    <p>Never be defensive when a customer is unhappy. Acknowledge first, apologise once, then move immediately to solutions. A well-handled complaint creates more loyalty than if nothing went wrong at all.</p>
-  </div>
-  <div class="tip">
-    <div class="tip-title">Set auto-replies when you're unavailable</div>
-    <p>Use the "Out of office" and "We're closed today" templates to set expectations when you can't respond. A clear auto-reply prevents frustration and shows professionalism even when you're off duty.</p>
-  </div>
+  <details class="tips-accordion">
+    <summary class="tips-summary">View Pro Tips <span class="tips-chevron">▾</span></summary>
+    <div class="tips-body">
+      <div class="tip">
+        <div class="tip-title">Always personalise — greet by name</div>
+        <p>Replace [Name] with the customer's actual name every time. A personalised message builds instant trust and converts far better than a generic reply. Never start with "Hi there" when you know who you're speaking to.</p>
+      </div>
+      <div class="tip">
+        <div class="tip-title">Reply within 1 hour — speed wins sales</div>
+        <p>82% of customers expect a response within 10 minutes. You are 7× more likely to close a sale when you reply within the hour. Use these templates to respond fast even on your busiest days.</p>
+      </div>
+      <div class="tip">
+        <div class="tip-title">Always end with an open door</div>
+        <p>Close every message with a question or an invitation — "Does that work for you?", "Shall I go ahead?", or "Feel free to ask anything else!" This keeps the conversation alive and signals that you genuinely care.</p>
+      </div>
+      <div class="tip">
+        <div class="tip-title">Never leave a message on "seen"</div>
+        <p>67% of customers who feel ignored will find a competitor. Even a quick "Got your message, I'll get back to you shortly!" is better than silence. Use the "Be right back" template for exactly this situation.</p>
+      </div>
+      <div class="tip">
+        <div class="tip-title">Handle complaints with calm, not defence</div>
+        <p>Never be defensive when a customer is unhappy. Acknowledge first, apologise once, then move immediately to solutions. A well-handled complaint creates more loyalty than if nothing went wrong at all.</p>
+      </div>
+      <div class="tip">
+        <div class="tip-title">Set auto-replies when you're unavailable</div>
+        <p>Use the "Out of office" and "We're closed today" templates to set expectations when you can't respond. A clear auto-reply prevents frustration and shows professionalism even when you're off duty.</p>
+      </div>
+    </div>
+  </details>
 
   <footer>INBOX AIDE SA · WhatsApp Response Toolkit · All rights reserved</footer>
 </div>
@@ -459,43 +508,84 @@ const data = {
 
 let activeCategory = "Pricing & Quotes";
 let searchTerm = "";
-let copiedIndex = null;
-let bizName = "";
 
-function applyBizName() {
-  bizName = document.getElementById("bizNameInput").value.trim();
-  const status = document.getElementById("bizStatus");
-  status.classList.toggle("visible", bizName.length > 0);
+// ── Quick Vault ──────────────────────────────────────────────
+const VAULT_KEYS = { biz: 'wrt_biz', banking: 'wrt_banking', price: 'wrt_price' };
+const vault = { biz: '', banking: '', price: '' };
+
+function loadVault() {
+  vault.biz     = localStorage.getItem(VAULT_KEYS.biz)     || '';
+  vault.banking = localStorage.getItem(VAULT_KEYS.banking) || '';
+  vault.price   = localStorage.getItem(VAULT_KEYS.price)   || '';
+  if (vault.biz)     document.getElementById('bizNameInput').value  = vault.biz;
+  if (vault.banking) document.getElementById('bankingInput').value  = vault.banking;
+  if (vault.price)   document.getElementById('priceListInput').value = vault.price;
+  updateVaultStatus();
+}
+
+function saveVault() {
+  vault.biz     = document.getElementById('bizNameInput').value.trim();
+  vault.banking = document.getElementById('bankingInput').value.trim();
+  vault.price   = document.getElementById('priceListInput').value.trim();
+  localStorage.setItem(VAULT_KEYS.biz,     vault.biz);
+  localStorage.setItem(VAULT_KEYS.banking, vault.banking);
+  localStorage.setItem(VAULT_KEYS.price,   vault.price);
+  updateVaultStatus();
   renderCards();
 }
 
-function resolveText(text) {
-  return bizName ? text.replace(/\[Business Name\]/g, bizName) : text;
+function updateVaultStatus() {
+  const count = [vault.biz, vault.banking, vault.price].filter(Boolean).length;
+  const el = document.getElementById('vaultStatus');
+  el.textContent = count > 0 ? `✓ ${count}/3 saved` : '';
+  el.classList.toggle('visible', count > 0);
 }
 
+// Vault-managed placeholders — these are resolved globally, not via inline inputs
+const VAULT_PLACEHOLDERS = ['[Business Name]', '[Bank details here]', '[List your services and prices here]'];
+
+function resolveText(text) {
+  let t = text;
+  if (vault.biz)     t = t.replace(/\[Business Name\]/g,                     vault.biz);
+  if (vault.banking) t = t.replace(/\[Bank details here\]/g,                  vault.banking);
+  if (vault.price)   t = t.replace(/\[List your services and prices here\]/g, vault.price);
+  return t;
+}
+
+// ── Tabs ────────────────────────────────────────────────────
 function buildTabs() {
   const container = document.getElementById("tabs");
   container.innerHTML = "";
   Object.keys(data).forEach(cat => {
     const btn = document.createElement("button");
-    btn.className = "tab" + (cat === activeCategory ? " active" : "");
+    btn.className = "tab" + (cat === activeCategory && !searchTerm ? " active" : "");
     btn.textContent = cat;
-    btn.onclick = () => { activeCategory = cat; searchTerm = ""; document.getElementById("searchInput").value = ""; renderCards(); buildTabs(); };
+    btn.onclick = () => {
+      activeCategory = cat;
+      searchTerm = "";
+      document.getElementById("searchInput").value = "";
+      renderCards();
+      buildTabs();
+    };
     container.appendChild(btn);
   });
 }
 
+// ── Cards ────────────────────────────────────────────────────
 function renderCards() {
   const container = document.getElementById("cards");
-  const countEl = document.getElementById("count");
+  const countEl   = document.getElementById("count");
   container.innerHTML = "";
 
   let pool = [];
   if (searchTerm.trim()) {
+    const terms = getSearchTerms(searchTerm);
     Object.values(data).forEach(arr => arr.forEach(item => pool.push(item)));
     pool = pool.filter(item =>
-      item.label.toLowerCase().includes(searchTerm) ||
-      item.text.toLowerCase().includes(searchTerm)
+      terms.some(term =>
+        item.label.toLowerCase().includes(term) ||
+        item.text.toLowerCase().includes(term)
+      )
     );
   } else {
     pool = data[activeCategory] || [];
@@ -512,38 +602,128 @@ function renderCards() {
     const card = document.createElement("div");
     card.className = "card";
     card.style.animationDelay = (i * 0.04) + "s";
-    const displayText = resolveText(item.text);
-    card.innerHTML = `
-      <div class="card-tag">
-        <span>${item.label}</span>
-        <span class="copy-hint" id="hint-${i}">Tap to copy</span>
-      </div>
-      <p>${displayText.replace(/\n/g, "<br/>")}</p>
-    `;
-    card.onclick = () => {
-      const textToCopy = resolveText(item.text);
-      navigator.clipboard.writeText(textToCopy).catch(() => {
-        const ta = document.createElement("textarea");
-        ta.value = textToCopy; document.body.appendChild(ta);
-        ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
+
+    // After vault substitution, find remaining dynamic brackets
+    const vaultResolved = resolveText(item.text);
+    const allBrackets = [...new Set((vaultResolved.match(/\[[^\]]+\]/g) || []))];
+
+    // Per-card input values store
+    const inputValues = {};
+    allBrackets.forEach(b => { inputValues[b] = ''; });
+
+    // Get fully resolved text including dynamic inputs
+    function getCardText() {
+      let t = resolveText(item.text);
+      allBrackets.forEach(b => {
+        if (inputValues[b]) t = t.split(b).join(inputValues[b]);
       });
-      card.classList.add("copied");
-      const hint = document.getElementById("hint-" + i);
-      if (hint) { hint.textContent = "✓ Copied!"; hint.classList.add("done"); }
-      setTimeout(() => {
-        card.classList.remove("copied");
-        if (hint) { hint.textContent = "Tap to copy"; hint.classList.remove("done"); }
-      }, 2000);
-    };
+      return t;
+    }
+
+    // Build dynamic input fields HTML
+    let dynHTML = '';
+    if (allBrackets.length > 0) {
+      const fields = allBrackets.map(b =>
+        `<div class="dyn-field">
+          <span class="dyn-label">${b.replace(/[\[\]]/g, '')}</span>
+          <input class="dyn-input" data-bracket="${b.replace(/"/g, '&quot;')}" placeholder="type here"/>
+        </div>`
+      ).join('');
+      dynHTML = `<div class="dyn-inputs">${fields}</div>`;
+    }
+
+    card.innerHTML = `
+      ${dynHTML}
+      <div class="card-tag">
+        <span class="card-label">${item.label}</span>
+      </div>
+      <p class="card-preview">${vaultResolved.replace(/\n/g, '<br/>')}</p>
+      <div class="card-actions">
+        <button class="btn-copy" id="copy-${i}">📋 Copy</button>
+        <a class="btn-send" id="wa-${i}" href="https://wa.me/?text=${encodeURIComponent(vaultResolved)}" target="_blank" rel="noopener">💬 WhatsApp</a>
+      </div>
+    `;
+
+    // Wire dynamic inputs
+    card.querySelectorAll('.dyn-input').forEach(input => {
+      input.addEventListener('click',  e => e.stopPropagation());
+      input.addEventListener('input',  e => {
+        e.stopPropagation();
+        inputValues[input.dataset.bracket] = input.value;
+        const preview = card.querySelector('.card-preview');
+        if (preview) preview.innerHTML = getCardText().replace(/\n/g, '<br/>');
+        const waLink = card.querySelector(`#wa-${i}`);
+        if (waLink) waLink.href = 'https://wa.me/?text=' + encodeURIComponent(getCardText());
+      });
+    });
+
+    // Copy button only
+    card.querySelector(`#copy-${i}`).addEventListener('click', e => {
+      e.stopPropagation();
+      doCopy(card, i, getCardText());
+    });
+
+    // WhatsApp send — update href on click to capture latest input values
+    card.querySelector(`#wa-${i}`).addEventListener('click', e => {
+      e.stopPropagation();
+      e.currentTarget.href = 'https://wa.me/?text=' + encodeURIComponent(getCardText());
+    });
+
     container.appendChild(card);
   });
 }
 
+function doCopy(card, i, text) {
+  navigator.clipboard.writeText(text).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+  });
+  if (navigator.vibrate) navigator.vibrate(40);
+  const btn = card.querySelector(`#copy-${i}`);
+  if (btn) { btn.textContent = '✓ Copied!'; btn.classList.add('done'); }
+  setTimeout(() => {
+    if (btn) { btn.textContent = '📋 Copy'; btn.classList.remove('done'); }
+  }, 2000);
+}
+
+const SYNONYMS = {
+  'refund':   ['money back', 'return', 'reverse', 'policy', 'refund'],
+  'eft':      ['banking', 'payment', 'proof', 'pop', 'bank', 'eft'],
+  'price':    ['cost', 'quote', 'rate', 'how much', 'fees', 'price', 'pricing'],
+  'courier':  ['delivery', 'shipping', 'post', 'paxi', 'courier', 'dispatch'],
+  'late':     ['delay', 'error', 'mistake', 'sorry', 'late', 'overdue'],
+  'sorry':    ['apolog', 'mistake', 'error', 'wrong', 'late', 'sorry'],
+  'angry':    ['rude', 'complaint', 'unhappy', 'frustrated', 'escalat'],
+  'review':   ['feedback', 'rating', 'google', 'facebook', 'review'],
+  'booking':  ['appointment', 'schedule', 'slot', 'reserve', 'booking'],
+  'deposit':  ['upfront', 'secure', 'payment', 'deposit', 'advance'],
+  'follow':   ['check in', 'follow up', 'chase', 'quiet', 'ghosted'],
+};
+
+function getSearchTerms(raw) {
+  const lower = raw.toLowerCase().trim();
+  for (const [key, synonyms] of Object.entries(SYNONYMS)) {
+    if (lower === key || synonyms.some(s => s === lower)) {
+      return synonyms;
+    }
+  }
+  return [lower];
+}
+
 function filterCards() {
   searchTerm = document.getElementById("searchInput").value.toLowerCase().trim();
+  // Deactivate all tabs when searching
+  if (searchTerm) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  } else {
+    buildTabs();
+  }
   renderCards();
 }
 
+// ── Init ─────────────────────────────────────────────────────
+loadVault();
 buildTabs();
 renderCards();
 
