@@ -3,79 +3,89 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>WhatsApp Response Toolkit</title>
-<meta name="application-name" content="WhatsApp Response Toolkit"/>
+<title>Reply Vault — Inbox Aide</title>
+<meta name="application-name" content="Reply Vault"/>
+<meta name="description" content="96 professional WhatsApp &amp; Facebook reply templates for South African small businesses, by Inbox Aide."/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="WA Toolkit"/>
-<meta name="theme-color" content="#faf7f2"/>
+<meta name="apple-mobile-web-app-title" content="Reply Vault"/>
+<meta name="theme-color" content="#FFF8EC"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <link id="appIcon" rel="apple-touch-icon"/>
 <link id="favicon" rel="icon" type="image/png"/>
 <script>
-function generateIcon(size) {
+// Original envelope + heart mark, drawn in the Inbox Aide palette (not the uploaded artwork).
+function drawBrandIcon(size) {
   const c = document.createElement('canvas');
   c.width = size; c.height = size;
   const ctx = c.getContext('2d');
-  const r = size * 0.18;
+  const r = size * 0.22;
+  function roundedRect(x, y, w, h, rad) {
+    ctx.beginPath();
+    ctx.moveTo(x + rad, y);
+    ctx.arcTo(x + w, y, x + w, y + h, rad);
+    ctx.arcTo(x + w, y + h, x, y + h, rad);
+    ctx.arcTo(x, y + h, x, y, rad);
+    ctx.arcTo(x, y, x + w, y, rad);
+    ctx.closePath();
+  }
+  // Background
+  roundedRect(0, 0, size, size, r);
+  ctx.fillStyle = '#FFF8EC';
+  ctx.fill();
+
+  // Envelope body (sage)
+  const ex = size * 0.16, ey = size * 0.46, ew = size * 0.68, eh = size * 0.38;
+  const er = size * 0.06;
+  roundedRect(ex, ey, ew, eh, er);
+  ctx.fillStyle = '#8C8C70';
+  ctx.fill();
+  // Fold lines
+  ctx.strokeStyle = 'rgba(42,32,22,0.28)';
+  ctx.lineWidth = size * 0.012;
   ctx.beginPath();
-  ctx.moveTo(r, 0); ctx.lineTo(size - r, 0);
-  ctx.quadraticCurveTo(size, 0, size, r);
-  ctx.lineTo(size, size - r);
-  ctx.quadraticCurveTo(size, size, size - r, size);
-  ctx.lineTo(r, size); ctx.quadraticCurveTo(0, size, 0, size - r);
-  ctx.lineTo(0, r); ctx.quadraticCurveTo(0, 0, r, 0);
-  ctx.closePath();
-  const bg = ctx.createLinearGradient(0, 0, size, size);
-  bg.addColorStop(0, '#2b2015'); bg.addColorStop(1, '#1c140c');
-  ctx.fillStyle = bg; ctx.fill();
-  const glow = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size*0.55);
-  glow.addColorStop(0, 'rgba(181,113,60,0.14)'); glow.addColorStop(1, 'transparent');
-  ctx.fillStyle = glow; ctx.beginPath(); ctx.rect(0,0,size,size); ctx.fill();
+  ctx.moveTo(ex, ey);
+  ctx.lineTo(ex + ew / 2, ey + eh * 0.62);
+  ctx.lineTo(ex + ew, ey);
+  ctx.stroke();
+
+  // Envelope flap (terracotta gradient triangle)
+  const flapGrad = ctx.createLinearGradient(ex, ey - eh, ex, ey);
+  flapGrad.addColorStop(0, '#DD6B34');
+  flapGrad.addColorStop(1, '#FCB17A');
   ctx.beginPath();
-  ctx.moveTo(r+4, 4); ctx.lineTo(size-r-4, 4);
-  ctx.quadraticCurveTo(size-4, 4, size-4, r+4);
-  ctx.lineTo(size-4, size-r-4);
-  ctx.quadraticCurveTo(size-4, size-4, size-r-4, size-4);
-  ctx.lineTo(r+4, size-4); ctx.quadraticCurveTo(4, size-4, 4, size-r-4);
-  ctx.lineTo(4, r+4); ctx.quadraticCurveTo(4, 4, r+4, 4);
+  ctx.moveTo(ex, ey);
+  ctx.lineTo(ex + ew / 2, ey - eh * 0.86);
+  ctx.lineTo(ex + ew, ey);
   ctx.closePath();
-  ctx.strokeStyle = 'rgba(181,113,60,0.35)'; ctx.lineWidth = size * 0.015; ctx.stroke();
-  const bx = size*0.22, by = size*0.16, bw = size*0.56, bh = size*0.38, br2 = size*0.07;
+  ctx.fillStyle = flapGrad;
+  ctx.fill();
+
+  // Heart at the flap peak
+  const hx = ex + ew / 2, hy = ey - eh * 0.32, hs = size * 0.15;
   ctx.beginPath();
-  ctx.moveTo(bx+br2, by); ctx.lineTo(bx+bw-br2, by);
-  ctx.quadraticCurveTo(bx+bw, by, bx+bw, by+br2);
-  ctx.lineTo(bx+bw, by+bh-br2);
-  ctx.quadraticCurveTo(bx+bw, by+bh, bx+bw-br2, by+bh);
-  ctx.lineTo(bx+size*0.14, by+bh); ctx.lineTo(bx+size*0.04, by+bh+size*0.10);
-  ctx.lineTo(bx+size*0.18, by+bh); ctx.lineTo(bx+br2, by+bh);
-  ctx.quadraticCurveTo(bx, by+bh, bx, by+bh-br2);
-  ctx.lineTo(bx, by+br2); ctx.quadraticCurveTo(bx, by, bx+br2, by);
+  ctx.moveTo(hx, hy + hs * 0.32);
+  ctx.bezierCurveTo(hx - hs * 0.55, hy - hs * 0.42, hx - hs * 1.1, hy + hs * 0.28, hx, hy + hs * 0.95);
+  ctx.bezierCurveTo(hx + hs * 1.1, hy + hs * 0.28, hx + hs * 0.55, hy - hs * 0.42, hx, hy + hs * 0.32);
   ctx.closePath();
-  ctx.fillStyle = 'rgba(181,113,60,0.12)'; ctx.fill();
-  ctx.strokeStyle = '#b5713c'; ctx.lineWidth = size * 0.022; ctx.stroke();
-  [[0.3, 0.55], [0.6, 0.37]].forEach(([pct, len]) => {
-    const y = by + bh * pct;
-    ctx.beginPath(); ctx.moveTo(bx + bw*0.14, y); ctx.lineTo(bx + bw*0.14 + bw*len, y);
-    ctx.strokeStyle = 'rgba(181,113,60,0.65)'; ctx.lineWidth = size * 0.028; ctx.lineCap = 'round'; ctx.stroke();
-  });
-  ctx.fillStyle = '#b5713c'; ctx.font = `700 ${size * 0.115}px sans-serif`;
-  ctx.textAlign = 'center'; ctx.fillText('WhatsApp', size/2, size * 0.72);
-  ctx.fillStyle = 'rgba(181,113,60,0.75)'; ctx.font = `400 ${size * 0.09}px sans-serif`;
-  ctx.fillText('Response Toolkit', size/2, size * 0.86);
+  ctx.fillStyle = '#FFF6D9';
+  ctx.fill();
+
   return c.toDataURL('image/png');
 }
 window.addEventListener('DOMContentLoaded', () => {
-  const icon512 = generateIcon(512);
-  const icon192 = generateIcon(192);
+  const icon512 = drawBrandIcon(512);
+  const icon192 = drawBrandIcon(192);
   document.getElementById('appIcon').href = icon512;
   document.getElementById('favicon').href = icon192;
+  const headerLogo = document.getElementById('logoMark');
+  if (headerLogo) headerLogo.src = drawBrandIcon(160);
   const manifest = {
-    name: "WhatsApp Response Toolkit",
-    short_name: "WA Toolkit",
+    name: "Reply Vault — Inbox Aide",
+    short_name: "Reply Vault",
     description: "96 Professional WhatsApp Response Templates for SA Small Businesses",
     start_url: ".", display: "standalone",
-    background_color: "#faf7f2", theme_color: "#faf7f2", orientation: "portrait",
+    background_color: "#FFF8EC", theme_color: "#FFF8EC", orientation: "portrait",
     icons: [
       { src: icon192, sizes: "192x192", type: "image/png" },
       { src: icon512, sizes: "512x512", type: "image/png", purpose: "any maskable" }
@@ -87,24 +97,34 @@ window.addEventListener('DOMContentLoaded', () => {
   document.head.appendChild(link);
 });
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --gold: #b5713c;
-    --gold-dim: rgba(181,113,60,0.12);
-    --gold-border: rgba(181,113,60,0.35);
-    --bg: #faf7f2;
+    /* Inbox Aide brand palette, sampled from the logo */
+    --terracotta: #DD6B34;
+    --terracotta-deep: #B8501F;
+    --terracotta-dim: rgba(221,107,52,0.12);
+    --terracotta-border: rgba(221,107,52,0.4);
+    --peach: #FCB17A;
+    --peach-soft: #FDE7CE;
+    --sage: #7C7C63;
+    --sage-deep: #5F5F4B;
+    --sage-soft: #E7E6D6;
+    --cream: #FFF8EC;
     --surface: #ffffff;
-    --border: rgba(139,101,63,0.18);
-    --text: #3d2f22;
-    --muted: #8a7660;
-    --accent: rgba(181,113,60,0.07);
+    --border: rgba(42,32,22,0.13);
+    --ink: #2A2016;
+    --muted: #756652;
+    --whatsapp: #25d366;
+    --tap: rgba(221,107,52,0.08);
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
-    background: var(--bg);
-    color: var(--text);
+    background: var(--cream);
+    color: var(--ink);
     font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
     min-height: 100vh;
     overflow-x: hidden;
   }
@@ -112,172 +132,186 @@ window.addEventListener('DOMContentLoaded', () => {
     content: '';
     position: fixed; inset: 0; z-index: 0;
     background:
-      radial-gradient(ellipse at 15% 15%, rgba(181,113,60,0.05) 0%, transparent 55%),
-      radial-gradient(ellipse at 85% 85%, rgba(139,90,43,0.04) 0%, transparent 55%);
+      radial-gradient(ellipse at 12% 8%, rgba(252,177,122,0.22) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 90%, rgba(124,124,99,0.10) 0%, transparent 55%);
     pointer-events: none;
   }
 
-  .wrap { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; padding: 50px 20px 100px; }
+  .wrap { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; padding: 28px 18px 110px; }
 
   /* Header */
+  .header-top { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+  .logo-mark {
+    width: 56px; height: 56px; border-radius: 18px; flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(184,80,31,0.28);
+  }
   .badge {
     display: inline-flex; align-items: center; gap: 6px;
-    background: var(--gold-dim); border: 1px solid var(--gold-border);
-    border-radius: 100px; padding: 5px 14px; margin-bottom: 22px;
-    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold);
+    background: var(--terracotta); border: none; color: #fff;
+    border-radius: 100px; padding: 6px 15px; margin-bottom: 14px;
+    font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    box-shadow: 0 3px 10px rgba(221,107,52,0.35);
   }
   h1 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(32px, 7vw, 50px); font-weight: 400; line-height: 1.1;
-    color: var(--text); letter-spacing: -0.02em; margin-bottom: 12px;
+    font-size: clamp(38px, 9vw, 56px); font-weight: 700; line-height: 1.02;
+    color: var(--ink); letter-spacing: -0.01em;
   }
-  h1 em { color: var(--gold); font-style: italic; }
-  .subtitle { color: var(--muted); font-size: 15px; line-height: 1.65; margin-bottom: 28px; }
+  h1 em { color: var(--terracotta-deep); font-style: italic; }
+  .subtitle { color: var(--muted); font-size: 16px; font-weight: 500; line-height: 1.6; margin: 14px 0 26px; }
 
-  /* Stats strip */
-  .stats-strip {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 2px; border-radius: 14px; overflow: hidden;
-    background: rgba(181,113,60,0.25); margin-bottom: 40px;
+  /* Sticky find bar: search + tabs travel with the thumb while scrolling */
+  .find-bar {
+    position: sticky; top: 0; z-index: 5;
+    background: var(--cream); padding-top: 10px; margin: 0 -18px 20px; padding-left: 18px; padding-right: 18px;
+    transition: box-shadow 0.2s;
   }
-  .stat-box { background: #ffffff; padding: 16px 12px; text-align: center; }
-  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; color: var(--gold); line-height: 1; }
-  .stat-desc { font-size: 10.5px; color: var(--muted); margin-top: 5px; line-height: 1.4; }
+  .find-bar.stuck { box-shadow: 0 8px 16px -8px rgba(42,32,22,0.18); background: rgba(255,248,236,0.96); backdrop-filter: blur(6px); }
 
   /* Category tabs */
   .tabs {
-    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px;
+    display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 6px;
+    scrollbar-width: none; -ms-overflow-style: none;
   }
+  .tabs::-webkit-scrollbar { display: none; }
   .tab {
-    padding: 8px 16px; border-radius: 100px; cursor: pointer; font-size: 13px;
-    border: 1px solid var(--border); background: var(--surface); color: var(--muted);
-    transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    padding: 11px 18px; border-radius: 100px; cursor: pointer; font-size: 14.5px;
+    border: 1.5px solid var(--border); background: var(--surface); color: var(--muted);
+    transition: all 0.15s; font-family: 'DM Sans', sans-serif; font-weight: 600;
+    white-space: nowrap; flex-shrink: 0; min-height: 44px; display: flex; align-items: center;
   }
-  .tab:hover { border-color: var(--gold-border); color: var(--gold); }
-  .tab.active { background: var(--gold-dim); border-color: var(--gold-border); color: var(--gold); }
+  .tab:active { transform: scale(0.96); }
+  .tab.active { background: var(--terracotta); border-color: var(--terracotta); color: #fff; box-shadow: 0 3px 10px rgba(221,107,52,0.35); }
+  .tab.active.jump { animation: tabJump 0.45s ease; }
+  .tab.fav-tab.active { background: var(--sage-deep); border-color: var(--sage-deep); box-shadow: 0 3px 10px rgba(95,95,75,0.35); }
+  @keyframes tabJump {
+    0%   { transform: scale(1); }
+    35%  { transform: scale(0.94); box-shadow: 0 2px 6px rgba(221,107,52,0.35); }
+    65%  { transform: scale(1.06); box-shadow: 0 5px 16px rgba(221,107,52,0.5); }
+    100% { transform: scale(1); box-shadow: 0 3px 10px rgba(221,107,52,0.35); }
+  }
 
   /* Section label */
   .section-label {
-    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 16px;
+    font-size: 12.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--terracotta-deep); margin-bottom: 16px;
   }
 
   /* Response cards */
-  .cards { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+  .cards { display: flex; flex-direction: column; gap: 14px; margin-bottom: 40px; }
   .card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 14px; padding: 20px 22px; cursor: pointer;
-    transition: all 0.2s; position: relative; margin-bottom: 16px;
+    background: var(--surface); border: 1.5px solid var(--border); border-left: 5px solid var(--peach);
+    border-radius: 16px; padding: 20px; cursor: pointer;
+    transition: all 0.15s; position: relative; box-shadow: 0 2px 8px rgba(42,32,22,0.05);
   }
-  .card:hover { border-color: var(--gold-border); background: var(--accent); }
-  .card.copied { border-color: rgba(181,113,60,0.6); background: var(--gold-dim); }
+  .card:active { transform: scale(0.99); background: var(--tap); }
+  .card:hover { border-color: var(--terracotta-border); border-left-color: var(--terracotta); }
+  .card.copied { border-color: var(--terracotta); border-left-color: var(--terracotta); background: var(--terracotta-dim); }
   .card-tag {
-    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--terracotta-deep); margin-bottom: 10px;
   }
-  .card p { font-size: 14.5px; line-height: 1.75; color: #4a3826; }
+  .card-label { flex: 1; }
+  .card p { font-size: 16px; line-height: 1.7; color: var(--ink); font-weight: 450; }
+
+  /* Star / favorite toggle — lives in the action row so it never crowds the content above */
+  .star-btn {
+    background: var(--cream); border: 1.5px solid var(--border); border-radius: 12px;
+    cursor: pointer; padding: 0; font-size: 22px; line-height: 1; color: var(--muted);
+    width: 52px; min-height: 52px; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: transform 0.15s, color 0.15s, background 0.15s, border-color 0.15s;
+  }
+  .star-btn.active { color: #fff; background: var(--terracotta); border-color: var(--terracotta); box-shadow: 0 3px 10px rgba(221,107,52,0.35); }
+  .star-btn:active { transform: scale(0.9); }
 
   /* Search */
-  .search-wrap { position: relative; margin-bottom: 30px; }
+  .search-wrap { position: relative; margin-bottom: 14px; }
   .search-wrap input {
-    width: 100%; padding: 13px 16px 13px 42px;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; color: var(--text); font-size: 14px;
+    width: 100%; min-height: 52px; padding: 14px 16px;
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: 14px; color: var(--ink); font-size: 16px; font-weight: 500;
     font-family: 'DM Sans', sans-serif; outline: none; transition: border 0.2s;
   }
-  .search-wrap input:focus { border-color: var(--gold-border); }
-  .search-wrap input::placeholder { color: var(--muted); }
-  .search-icon {
-    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-    color: var(--muted); font-size: 16px; pointer-events: none;
-  }
+  .search-wrap input:focus { border-color: var(--terracotta); }
+  .search-wrap input::placeholder { color: var(--muted); font-weight: 400; }
 
   /* Quick Vault Panel */
-  .vault-panel { background: var(--gold-dim); border: 1px solid var(--gold-border); border-radius: 16px; padding: 18px 20px; margin-bottom: 24px; }
+  .vault-panel { background: var(--peach-soft); border: 1.5px solid var(--terracotta-border); border-radius: 18px; padding: 18px 18px; margin-bottom: 22px; }
   .vault-header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
-  .vault-title { color: var(--gold); font-size: 12px; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 700; }
-  .vault-sub { color: var(--muted); font-size: 11px; flex: 1; min-width: 140px; }
+  .vault-title { color: var(--terracotta-deep); font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 800; }
+  .vault-sub { color: var(--muted); font-size: 11.5px; font-weight: 500; flex: 1; min-width: 140px; }
   .vault-fields { display: flex; flex-direction: column; gap: 10px; }
   .vault-field { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .vault-field label { color: var(--gold); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; min-width: 170px; font-weight: 600; }
-  .vault-field input { flex: 1; min-width: 180px; background: #ffffff; border: 1px solid var(--gold-border); border-radius: 10px; padding: 9px 14px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13.5px; outline: none; transition: border 0.2s; }
-  .vault-field input:focus { border-color: var(--gold); }
+  .vault-field label { color: var(--terracotta-deep); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; min-width: 170px; font-weight: 700; }
+  .vault-field input { flex: 1; min-width: 180px; min-height: 46px; background: #ffffff; border: 1.5px solid var(--terracotta-border); border-radius: 12px; padding: 10px 14px; color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none; transition: border 0.2s; }
+  .vault-field input:focus { border-color: var(--terracotta); }
   .vault-field input::placeholder { color: var(--muted); }
-  .biz-status { font-size: 11px; color: var(--gold); opacity: 0; transition: opacity 0.3s; white-space: nowrap; font-weight: 600; }
+  .biz-status { font-size: 11.5px; color: var(--terracotta-deep); opacity: 0; transition: opacity 0.3s; white-space: nowrap; font-weight: 700; }
   .biz-status.visible { opacity: 1; }
 
   /* Dynamic variable inputs */
-  .dyn-inputs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid rgba(139,101,63,0.15); width: 100%; }
-  .dyn-field { display: flex; align-items: center; gap: 6px; background: rgba(181,113,60,0.08); border: 1px solid rgba(181,113,60,0.25); border-radius: 8px; padding: 5px 10px; flex: 1 1 100%; max-width: 100%; }
-  .dyn-label { color: var(--gold); font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; }
-  .dyn-input { background: transparent; border: none; border-bottom: 1px solid var(--gold-border); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none; width: 100%; padding: 2px 4px; min-height: 40px; }
-  .dyn-input::placeholder { color: rgba(138,118,96,0.6); font-size: 11px; }
+  .dyn-inputs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); width: 100%; }
+  .dyn-field { display: flex; align-items: center; gap: 6px; background: var(--peach-soft); border: 1.5px solid var(--terracotta-border); border-radius: 10px; padding: 6px 12px; flex: 1 1 100%; max-width: 100%; }
+  .dyn-label { color: var(--terracotta-deep); font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+  .dyn-input { background: transparent; border: none; border-bottom: 1.5px solid var(--terracotta-border); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none; width: 100%; padding: 6px 4px; min-height: 40px; }
+  .dyn-input::placeholder { color: var(--muted); font-size: 12px; }
 
   /* Card action buttons */
-  .card-actions { display: flex; gap: 10px; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(139,101,63,0.15); }
-  .btn-copy { flex: 1; padding: 14px 0; background: transparent; border: 1px solid var(--gold-border); border-radius: 10px; color: var(--gold); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; letter-spacing: 0.03em; }
-  .btn-copy:hover { background: var(--gold-dim); border-color: var(--gold); }
-  .btn-copy.done { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
-  .btn-send { flex: 1; padding: 14px 0; background: #25d366; border: none; border-radius: 10px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; letter-spacing: 0.03em; text-decoration: none; display: flex; align-items: center; justify-content: center; }
-  .btn-send:hover { opacity: 0.88; }
+  .card-actions { display: flex; gap: 10px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .btn-copy { flex: 1; min-height: 52px; padding: 0; background: var(--surface); border: 1.5px solid var(--terracotta-border); border-radius: 12px; color: var(--terracotta-deep); font-family: 'DM Sans', sans-serif; font-size: 15.5px; font-weight: 700; cursor: pointer; transition: all 0.15s; letter-spacing: 0.01em; }
+  .btn-copy:active { transform: scale(0.97); background: var(--terracotta-dim); }
+  .btn-copy.done { background: var(--terracotta); border-color: var(--terracotta); color: #fff; }
+  .btn-send { flex: 1; min-height: 52px; padding: 0; background: var(--whatsapp); border: none; border-radius: 12px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 15.5px; font-weight: 700; cursor: pointer; transition: all 0.15s; letter-spacing: 0.01em; text-decoration: none; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 10px rgba(37,211,102,0.3); }
+  .btn-send:active { transform: scale(0.97); }
 
   /* Count */
-  .count { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
-  .count span { color: var(--gold); }
+  .count { color: var(--muted); font-size: 13.5px; font-weight: 500; margin-bottom: 18px; }
+  .count span { color: var(--terracotta-deep); font-weight: 700; }
 
   /* Divider */
   .divider {
-    border: none; border-top: 1px solid var(--border); margin: 40px 0;
+    border: none; border-top: 1.5px solid var(--border); margin: 40px 0;
   }
 
-  /* Tip box */
-  .tip {
-    background: var(--gold-dim); border: 1px solid var(--gold-border);
-    border-radius: 14px; padding: 18px 22px; margin-bottom: 14px;
+  /* Reminder note */
+  .reminder-note {
+    background: var(--sage-soft); border: 1.5px solid rgba(124,124,99,0.35);
+    border-radius: 16px; padding: 18px 20px; margin: 32px 0 8px;
   }
-  .tip-title { color: var(--gold); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
-  .tip p { color: #6b4423; font-size: 13.5px; line-height: 1.7; }
-
-  /* Professional Response Formula */
-  .formula-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 18px; }
-  .formula-step {
-    display: flex; flex-direction: column; align-items: center; gap: 5px;
-    background: #ffffff; border: 1px solid var(--gold-border); border-radius: 12px;
-    padding: 12px 14px; min-width: 92px; text-align: center; flex: 1 1 auto;
-  }
-  .formula-icon { font-size: 20px; line-height: 1; }
-  .formula-label { font-size: 11px; font-weight: 700; letter-spacing: 0.02em; color: var(--text); line-height: 1.3; }
-  .formula-connector { font-size: 16px; color: var(--gold); font-weight: 700; flex: 0 0 auto; }
-  .formula-result {
-    background: var(--gold); color: #2f2015; border-radius: 12px; padding: 12px 16px;
-    font-size: 11.5px; font-weight: 700; letter-spacing: 0.03em; text-align: center;
-    flex: 1 1 auto; min-width: 110px;
-  }
+  .reminder-title { color: var(--sage-deep); font-size: 12.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .reminder-note p:last-child { color: #45402f; font-size: 14.5px; font-weight: 500; line-height: 1.7; }
 
   /* Install banner */
-  .install-banner { background: var(--gold-dim); border: 1px solid var(--gold-border); border-radius: 14px; padding: 14px 18px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
-  .install-banner p { flex: 1; font-size: 13px; color: #6b4423; line-height: 1.5; }
-  .install-btn { padding: 8px 16px; background: var(--gold); color: #2f2015; border: none; border-radius: 100px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; font-family: 'DM Sans', sans-serif; }
-  .install-dismiss { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 18px; padding: 4px; }
-
-  /* Collapsible tips accordion */
-  .tips-accordion { border: 1px solid var(--gold-border); border-radius: 14px; overflow: hidden; margin-bottom: 12px; }
-  .tips-accordion[open] .tips-chevron { display: inline-block; transform: rotate(180deg); }
-  .tips-summary { list-style: none; padding: 14px 20px; cursor: pointer; color: var(--gold); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; background: var(--gold-dim); display: flex; justify-content: space-between; align-items: center; user-select: none; }
-  .tips-summary::-webkit-details-marker { display: none; }
-  .tips-summary:hover { background: rgba(181,113,60,0.18); }
-  .tips-chevron { font-size: 14px; transition: transform 0.25s; display: inline-block; }
-  .tips-body { padding: 16px 0 4px; }
-  .tips-body .tip:last-child { margin-bottom: 0; }
+  .install-banner { background: var(--terracotta); border: none; border-radius: 16px; padding: 15px 18px; margin-bottom: 22px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 14px rgba(221,107,52,0.3); }
+  .install-banner p { flex: 1; font-size: 13.5px; font-weight: 500; color: #fff; line-height: 1.5; }
+  .install-btn { min-height: 40px; padding: 0 18px; background: #fff; color: var(--terracotta-deep); border: none; border-radius: 100px; font-size: 13px; font-weight: 800; cursor: pointer; white-space: nowrap; font-family: 'DM Sans', sans-serif; }
+  .install-dismiss { background: none; border: none; color: rgba(255,255,255,0.8); cursor: pointer; font-size: 20px; padding: 4px; min-width: 32px; min-height: 32px; }
 
   /* Footer */
-  footer { text-align: center; margin-top: 60px; color: rgba(139,101,63,0.45); font-size: 11px; letter-spacing: 0.1em; }
+  footer { text-align: center; margin-top: 60px; color: var(--muted); opacity: 0.7; font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; }
 
   /* Empty state */
-  .empty { text-align: center; padding: 50px 20px; color: var(--muted); font-size: 14px; }
+  .empty { text-align: center; padding: 50px 20px; color: var(--muted); font-size: 15px; }
+
+  /* Floating scroll-to-top — thumb reach for one-handed use */
+  .scroll-top {
+    position: fixed; right: 18px; bottom: 22px; z-index: 20;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--terracotta); color: #fff; border: none;
+    box-shadow: 0 6px 18px rgba(184,80,31,0.4);
+    font-size: 20px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(10px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .scroll-top.visible { opacity: 1; pointer-events: auto; transform: none; }
+  .scroll-top:active { transform: scale(0.92); }
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   .card { animation: fadeIn 0.3s ease both; }
+
+  @media (max-width: 380px) {
+    .vault-field label { min-width: 100%; }
+  }
 </style>
 </head>
 <body>
@@ -285,66 +319,51 @@ window.addEventListener('DOMContentLoaded', () => {
 
   <!-- Install Banner -->
   <div class="install-banner" id="installBanner" style="display:none">
-    <span style="font-size:22px">📲</span>
-    <p>Add this app to your home screen for quick access anytime!</p>
+    <p>Add this app to your home screen for quick access anytime.</p>
     <button class="install-btn" id="installBtn">Install</button>
     <button class="install-dismiss" onclick="document.getElementById('installBanner').style.display='none'">✕</button>
   </div>
 
   <!-- Header -->
-  <div style="text-align:center; margin-bottom: 28px;">
-    <div class="badge">✦ 96 Professional Templates</div>
-    <h1>Reply <em>Vault</em></h1>
-    <p class="subtitle">Turn repetitive customer messages into one-tap replies.</p>
+  <div class="header-top">
+    <img class="logo-mark" id="logoMark" alt="Inbox Aide logo"/>
+    <div class="badge" style="margin-bottom:0">96 Professional Templates</div>
   </div>
-
-  <!-- Stats Strip -->
-  <div class="stats-strip">
-    <div class="stat-box">
-      <div class="stat-num">82%</div>
-      <div class="stat-desc">of customers expect a reply within 10 minutes</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num">7×</div>
-      <div class="stat-desc">more likely to convert when you reply within the hour</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num">67%</div>
-      <div class="stat-desc">of ignored customers leave for a competitor</div>
-    </div>
+  <div style="margin-bottom: 28px;">
+    <h1>Reply <em>Vault</em></h1>
+    <p class="subtitle">Turn repetitive customer messages into one-tap replies, by Inbox Aide.</p>
   </div>
 
   <!-- Quick Vault -->
   <div class="vault-panel">
     <div class="vault-header">
-      <span class="vault-title">⚡ Quick Vault</span>
-      <span class="vault-sub">Saved details auto-apply instantly. 🔒 100% Private: Your details are stored safely on your device and never sent to a server.</span>
+      <span class="vault-title">Quick Vault</span>
+      <span class="vault-sub">Saved details auto-apply instantly. 100% private — stored only on this device, never sent to a server.</span>
       <span class="biz-status" id="vaultStatus"></span>
     </div>
     <div class="vault-fields">
       <div class="vault-field">
-        <label for="bizNameInput">🏪 Business Name</label>
+        <label for="bizNameInput">Business Name</label>
         <input type="text" id="bizNameInput" placeholder="e.g. Lash by Zondra" oninput="saveVault()"/>
       </div>
       <div class="vault-field">
-        <label for="bankingInput">🏦 Banking Details</label>
+        <label for="bankingInput">Banking Details</label>
         <input type="text" id="bankingInput" placeholder="e.g. FNB · Acc: 123456 · Ref: Your Name" oninput="saveVault()"/>
       </div>
       <div class="vault-field">
-        <label for="priceListInput">📋 Price List / Catalogue</label>
+        <label for="priceListInput">Price List / Catalogue</label>
         <input type="text" id="priceListInput" placeholder="e.g. selar.co/yourstore or website link" oninput="saveVault()"/>
       </div>
     </div>
   </div>
 
-  <!-- Search -->
-  <div class="search-wrap">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="searchInput" placeholder="Search by keyword e.g. price, refund, booking..." oninput="filterCards()"/>
+  <!-- Sticky search + tabs: stays within thumb reach while browsing -->
+  <div class="find-bar" id="findBar">
+    <div class="search-wrap">
+      <input type="text" id="searchInput" placeholder="Search e.g. price, refund, booking..." oninput="filterCards()"/>
+    </div>
+    <div class="tabs" id="tabs"></div>
   </div>
-
-  <!-- Tabs -->
-  <div class="tabs" id="tabs"></div>
 
   <!-- Count -->
   <p class="count" id="count"></p>
@@ -352,59 +371,16 @@ window.addEventListener('DOMContentLoaded', () => {
   <!-- Cards -->
   <div class="cards" id="cards"></div>
 
-  <!-- Tips Section -->
-  <hr class="divider"/>
-  <p class="section-label">✦ The Professional Response Formula</p>
-
-  <div class="tip">
-    <div class="formula-steps">
-      <div class="formula-step"><span class="formula-icon">👋</span><span class="formula-label">Warm Greeting</span></div>
-      <span class="formula-connector">+</span>
-      <div class="formula-step"><span class="formula-icon">✅</span><span class="formula-label">Acknowledge</span></div>
-      <span class="formula-connector">+</span>
-      <div class="formula-step"><span class="formula-icon">💡</span><span class="formula-label">Clear Solution</span></div>
-      <span class="formula-connector">+</span>
-      <div class="formula-step"><span class="formula-icon">🤝</span><span class="formula-label">Open Door</span></div>
-      <span class="formula-connector">=</span>
-      <div class="formula-result">Loyal Customer</div>
-    </div>
-    <p>Every great WhatsApp response follows this formula. Greet by name, acknowledge what they said, give a clear answer or next step, then leave the door open. That's all it takes to turn a stranger into a repeat customer.</p>
+  <!-- Reminder note -->
+  <div class="reminder-note">
+    <p class="reminder-title">A good response looks like this</p>
+    <p>Greet them by name, acknowledge what they said, give a clear answer or next step, then leave the door open for more questions.</p>
   </div>
 
-  <p class="section-label" style="margin-top:20px">✦ Pro Tips for Better Replies</p>
-
-  <details class="tips-accordion">
-    <summary class="tips-summary">View Pro Tips <span class="tips-chevron">▾</span></summary>
-    <div class="tips-body">
-      <div class="tip">
-        <div class="tip-title">Always personalise — greet by name</div>
-        <p>Replace [Name] with the customer's actual name every time. A personalised message builds instant trust and converts far better than a generic reply. Never start with "Hi there" when you know who you're speaking to.</p>
-      </div>
-      <div class="tip">
-        <div class="tip-title">Reply within 1 hour — speed wins sales</div>
-        <p>82% of customers expect a response within 10 minutes. You are 7× more likely to close a sale when you reply within the hour. Use these templates to respond fast even on your busiest days.</p>
-      </div>
-      <div class="tip">
-        <div class="tip-title">Always end with an open door</div>
-        <p>Close every message with a question or an invitation — "Does that work for you?", "Shall I go ahead?", or "Feel free to ask anything else!" This keeps the conversation alive and signals that you genuinely care.</p>
-      </div>
-      <div class="tip">
-        <div class="tip-title">Never leave a message on "seen"</div>
-        <p>67% of customers who feel ignored will find a competitor. Even a quick "Got your message, I'll get back to you shortly!" is better than silence. Use the "Be right back" template for exactly this situation.</p>
-      </div>
-      <div class="tip">
-        <div class="tip-title">Handle complaints with calm, not defence</div>
-        <p>Never be defensive when a customer is unhappy. Acknowledge first, apologise once, then move immediately to solutions. A well-handled complaint creates more loyalty than if nothing went wrong at all.</p>
-      </div>
-      <div class="tip">
-        <div class="tip-title">Set auto-replies when you're unavailable</div>
-        <p>Use the "Out of office" and "We're closed today" templates to set expectations when you can't respond. A clear auto-reply prevents frustration and shows professionalism even when you're off duty.</p>
-      </div>
-    </div>
-  </details>
-
-  <footer>INBOX AIDE SA · WhatsApp Response Toolkit · All rights reserved</footer>
+  <footer>INBOX AIDE · REPLY VAULT · ALL RIGHTS RESERVED</footer>
 </div>
+
+<button class="scroll-top" id="scrollTopBtn" aria-label="Back to top" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</button>
 
 <script>
 const data = {
@@ -535,6 +511,28 @@ const data = {
 let activeCategory = "Pricing & Quotes";
 let searchTerm = "";
 let matchedCategory = null;
+let showingFavorites = false;
+
+// ── Favorites ────────────────────────────────────────────────
+const FAVORITES_KEY = 'wrt_favorites';
+let favorites = new Set();
+try {
+  favorites = new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]'));
+} catch (e) { favorites = new Set(); }
+
+function favId(category, label) { return category + '::' + label; }
+
+function saveFavorites() {
+  localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favorites]));
+}
+
+function toggleFavorite(id) {
+  if (favorites.has(id)) favorites.delete(id);
+  else favorites.add(id);
+  saveFavorites();
+  renderCards();
+  buildTabs();
+}
 
 // ── Quick Vault ──────────────────────────────────────────────
 const VAULT_KEYS = { biz: 'wrt_biz', banking: 'wrt_banking', price: 'wrt_price' };
@@ -564,7 +562,7 @@ function saveVault() {
 function updateVaultStatus() {
   const count = [vault.biz, vault.banking, vault.price].filter(Boolean).length;
   const el = document.getElementById('vaultStatus');
-  el.textContent = count > 0 ? `✓ ${count}/3 saved` : '';
+  el.textContent = count > 0 ? `${count}/3 saved` : '';
   el.classList.toggle('visible', count > 0);
 }
 
@@ -583,12 +581,31 @@ function resolveText(text) {
 function buildTabs() {
   const container = document.getElementById("tabs");
   container.innerHTML = "";
+
+  const favBtn = document.createElement("button");
+  favBtn.className = "tab fav-tab" + (showingFavorites ? " active" : "");
+  favBtn.textContent = "★ Favorites" + (favorites.size ? ` (${favorites.size})` : "");
+  favBtn.onclick = () => {
+    showingFavorites = true;
+    searchTerm = "";
+    matchedCategory = null;
+    document.getElementById("searchInput").value = "";
+    renderCards();
+    buildTabs();
+  };
+  container.appendChild(favBtn);
+
   Object.keys(data).forEach(cat => {
     const btn = document.createElement("button");
-    btn.className = "tab" + (cat === activeCategory && (!searchTerm || matchedCategory === cat) ? " active" : "");
+    const isActive = !showingFavorites && cat === activeCategory && (!searchTerm || matchedCategory === cat);
+    // A "jump" is when search itself landed us on this tab (not a manual tap) —
+    // play the same highlight pulse a tap would give, so it reads as intentional.
+    const isSearchJump = isActive && !!searchTerm && matchedCategory === cat;
+    btn.className = "tab" + (isActive ? " active" : "") + (isSearchJump ? " jump" : "");
     btn.textContent = cat;
     btn.onclick = () => {
       activeCategory = cat;
+      showingFavorites = false;
       searchTerm = "";
       matchedCategory = null;
       document.getElementById("searchInput").value = "";
@@ -597,6 +614,12 @@ function buildTabs() {
     };
     container.appendChild(btn);
   });
+  // Jump the highlighted tab into view so a search doesn't feel disconnected
+  // from the category it landed on, even if that tab is scrolled off-screen.
+  const activeTab = container.querySelector(".tab.active");
+  if (activeTab) {
+    activeTab.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  }
 }
 
 // ── Cards ────────────────────────────────────────────────────
@@ -606,25 +629,37 @@ function renderCards() {
   container.innerHTML = "";
 
   let pool = [];
-  if (matchedCategory) {
-    pool = data[matchedCategory] || [];
+  if (showingFavorites) {
+    Object.entries(data).forEach(([cat, arr]) => arr.forEach(item => {
+      const id = favId(cat, item.label);
+      if (favorites.has(id)) pool.push({ ...item, _cat: cat });
+    }));
+  } else if (matchedCategory) {
+    pool = (data[matchedCategory] || []).map(item => ({ ...item, _cat: matchedCategory }));
   } else if (searchTerm.trim()) {
     const terms = getSearchTerms(searchTerm);
-    Object.values(data).forEach(arr => arr.forEach(item => pool.push(item)));
-    pool = pool.filter(item =>
-      terms.some(term =>
+    Object.entries(data).forEach(([cat, arr]) => arr.forEach(item => {
+      if (terms.some(term =>
         item.label.toLowerCase().includes(term) ||
         item.text.toLowerCase().includes(term)
-      )
-    );
+      )) {
+        pool.push({ ...item, _cat: cat });
+      }
+    }));
   } else {
-    pool = data[activeCategory] || [];
+    pool = (data[activeCategory] || []).map(item => ({ ...item, _cat: activeCategory }));
   }
 
-  countEl.innerHTML = `<span>${pool.length}</span> response${pool.length !== 1 ? "s" : ""} ${searchTerm ? "found" : "in this category"}`;
+  if (showingFavorites) {
+    countEl.innerHTML = `<span>${pool.length}</span> favorite${pool.length !== 1 ? "s" : ""} saved`;
+  } else {
+    countEl.innerHTML = `<span>${pool.length}</span> response${pool.length !== 1 ? "s" : ""} ${searchTerm ? "found" : "in this category"}`;
+  }
 
   if (pool.length === 0) {
-    container.innerHTML = '<div class="empty">No responses found. Try a different search term.</div>';
+    container.innerHTML = showingFavorites
+      ? '<div class="empty">No favorites yet. Tap the star on any response to save it here.</div>'
+      : '<div class="empty">No responses found. Try a different search term.</div>';
     return;
   }
 
@@ -662,6 +697,9 @@ function renderCards() {
       dynHTML = `<div class="dyn-inputs">${fields}</div>`;
     }
 
+    const id = favId(item._cat, item.label);
+    const isFav = favorites.has(id);
+
     card.innerHTML = `
       ${dynHTML}
       <div class="card-tag">
@@ -669,10 +707,16 @@ function renderCards() {
       </div>
       <p class="card-preview">${vaultResolved.replace(/\n/g, '<br/>')}</p>
       <div class="card-actions">
-        <button class="btn-copy" id="copy-${i}">📋 Copy</button>
-        <a class="btn-send" id="wa-${i}" href="https://wa.me/?text=${encodeURIComponent(vaultResolved)}" target="_blank" rel="noopener">💬 WhatsApp</a>
+        <button class="star-btn${isFav ? ' active' : ''}" aria-label="${isFav ? 'Remove from favorites' : 'Add to favorites'}">${isFav ? '★' : '☆'}</button>
+        <button class="btn-copy" id="copy-${i}">Copy</button>
+        <a class="btn-send" id="wa-${i}" href="https://wa.me/?text=${encodeURIComponent(vaultResolved)}" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     `;
+
+    card.querySelector('.star-btn').addEventListener('click', e => {
+      e.stopPropagation();
+      toggleFavorite(id);
+    });
 
     // Wire dynamic inputs
     card.querySelectorAll('.dyn-input').forEach(input => {
@@ -711,9 +755,9 @@ function doCopy(card, i, text) {
   });
   if (navigator.vibrate) navigator.vibrate(40);
   const btn = card.querySelector(`#copy-${i}`);
-  if (btn) { btn.textContent = '✓ Copied!'; btn.classList.add('done'); }
+  if (btn) { btn.textContent = 'Copied!'; btn.classList.add('done'); }
   setTimeout(() => {
-    if (btn) { btn.textContent = '📋 Copy'; btn.classList.remove('done'); }
+    if (btn) { btn.textContent = 'Copy'; btn.classList.remove('done'); }
   }, 2000);
 }
 
@@ -733,16 +777,48 @@ const SYNONYMS = {
 
 // Keyword → category shortcut: typing one of these jumps straight to its category tab
 const CATEGORY_FOR_KEYWORD = {
-  'price':   'Pricing & Quotes',
-  'booking': 'Availability & Bookings',
-  'eft':     'Payments & Invoices',
-  'deposit': 'Payments & Invoices',
-  'sorry':   'Complaints & Unhappy Customers',
-  'angry':   'Complaints & Unhappy Customers',
-  'late':    'Complaints & Unhappy Customers',
-  'follow':  'Follow Ups',
-  'courier': 'Shipping & Delivery',
-  'review':  'Review & Referral Requests',
+  'price':      'Pricing & Quotes',
+  'quote':      'Pricing & Quotes',
+  'booking':    'Availability & Bookings',
+  'appointment':'Availability & Bookings',
+  'reschedule': 'Availability & Bookings',
+  'eft':        'Payments & Invoices',
+  'deposit':    'Payments & Invoices',
+  'invoice':    'Payments & Invoices',
+  'refund':     'Payments & Invoices',
+  'sorry':      'Complaints & Unhappy Customers',
+  'angry':      'Complaints & Unhappy Customers',
+  'late':       'Complaints & Unhappy Customers',
+  'complaint':  'Complaints & Unhappy Customers',
+  'follow':     'Follow Ups',
+  'checkin':    'Follow Ups',
+  'welcome':    'General Responses',
+  'closed':     'General Responses',
+  'office':     'General Responses',
+  'collab':     'Collaborations',
+  'collaboration':'Collaborations',
+  'influencer': 'Collaborations',
+  'sponsor':    'Collaborations',
+  'courier':    'Shipping & Delivery',
+  'delivery':   'Shipping & Delivery',
+  'shipping':   'Shipping & Delivery',
+  'promo':      'Seasonal Specials',
+  'seasonal':   'Seasonal Specials',
+  'holiday':    'Seasonal Specials',
+  'blackfriday':'Seasonal Specials',
+  'glitch':     'Damage Control & Error Recovery',
+  'mistake':    'Damage Control & Error Recovery',
+  'overcharged':'Damage Control & Error Recovery',
+  'doublebooked':'Damage Control & Error Recovery',
+  'afterhours': 'Boundary Setting & Policies',
+  'boundaries': 'Boundary Setting & Policies',
+  'scope':      'Boundary Setting & Policies',
+  'norefund':   'Boundary Setting & Policies',
+  'review':     'Review & Referral Requests',
+  'referral':   'Review & Referral Requests',
+  'upsell':     'Upselling & Re-engagement',
+  'bundle':     'Upselling & Re-engagement',
+  'upgrade':    'Upselling & Re-engagement',
 };
 
 function getSearchTerms(raw) {
@@ -758,6 +834,33 @@ function getSearchTerms(raw) {
 function filterCards() {
   searchTerm = document.getElementById("searchInput").value.toLowerCase().trim();
   matchedCategory = CATEGORY_FOR_KEYWORD[searchTerm] || null;
+  showingFavorites = false;
+
+  // No explicit mapping? Find whichever category holds the most matches —
+  // if one category is the clear front-runner, jump there too, so the tabs
+  // always reflect where the results live rather than staying put.
+  if (!matchedCategory && searchTerm) {
+    const terms = getSearchTerms(searchTerm);
+    const counts = {};
+    Object.entries(data).forEach(([cat, arr]) => {
+      const n = arr.filter(item =>
+        terms.some(term =>
+          item.label.toLowerCase().includes(term) ||
+          item.text.toLowerCase().includes(term)
+        )
+      ).length;
+      if (n > 0) counts[cat] = n;
+    });
+    const ranked = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+    if (ranked.length) {
+      const topCount = ranked[0][1];
+      const leaders = ranked.filter(([, n]) => n === topCount);
+      if (leaders.length === 1) {
+        matchedCategory = leaders[0][0];
+      }
+    }
+  }
+
   if (matchedCategory) {
     activeCategory = matchedCategory;
   }
@@ -769,6 +872,15 @@ function filterCards() {
 loadVault();
 buildTabs();
 renderCards();
+
+// Scroll-to-top button + sticky find-bar shadow (one-handed scroll aids)
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+const findBar = document.getElementById('findBar');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  scrollTopBtn.classList.toggle('visible', y > 400);
+  findBar.classList.toggle('stuck', y > 20);
+}, { passive: true });
 
 // PWA install prompt
 let deferredPrompt = null;
