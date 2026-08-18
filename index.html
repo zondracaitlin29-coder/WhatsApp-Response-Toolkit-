@@ -14,12 +14,11 @@
 <link id="appIcon" rel="apple-touch-icon"/>
 <link id="favicon" rel="icon" type="image/png"/>
 <script>
-// Original envelope + heart mark, drawn in the Inbox Aide palette (not the uploaded artwork).
+// Original chat-bubble reply mark, drawn in the Inbox Aide palette — clean and communication-focused.
 function drawBrandIcon(size) {
   const c = document.createElement('canvas');
   c.width = size; c.height = size;
   const ctx = c.getContext('2d');
-  const r = size * 0.22;
   function roundedRect(x, y, w, h, rad) {
     ctx.beginPath();
     ctx.moveTo(x + rad, y);
@@ -29,47 +28,47 @@ function drawBrandIcon(size) {
     ctx.arcTo(x, y, x + w, y, rad);
     ctx.closePath();
   }
+
   // Background
-  roundedRect(0, 0, size, size, r);
+  roundedRect(0, 0, size, size, size * 0.22);
   ctx.fillStyle = '#FFF8EC';
   ctx.fill();
 
-  // Envelope body (sage)
-  const ex = size * 0.16, ey = size * 0.46, ew = size * 0.68, eh = size * 0.38;
-  const er = size * 0.06;
-  roundedRect(ex, ey, ew, eh, er);
+  // Back bubble (sage) — a second voice in the conversation
+  const bx0 = size * 0.34, by0 = size * 0.42, bx1 = size * 0.80, by1 = size * 0.70;
+  roundedRect(bx0, by0, bx1 - bx0, by1 - by0, size * 0.07);
   ctx.fillStyle = '#8C8C70';
   ctx.fill();
-  // Fold lines
-  ctx.strokeStyle = 'rgba(42,32,22,0.28)';
-  ctx.lineWidth = size * 0.012;
   ctx.beginPath();
-  ctx.moveTo(ex, ey);
-  ctx.lineTo(ex + ew / 2, ey + eh * 0.62);
-  ctx.lineTo(ex + ew, ey);
+  ctx.moveTo(bx1 - size * 0.10, by1 - 1);
+  ctx.lineTo(bx1 - size * 0.02, by1 + size * 0.06);
+  ctx.lineTo(bx1 - size * 0.16, by1 - 1);
+  ctx.closePath();
+  ctx.fill();
+
+  // Front bubble (terracotta) — the reply, front and center
+  const fx0 = size * 0.16, fy0 = size * 0.20, fx1 = size * 0.68, fy1 = size * 0.54;
+  roundedRect(fx0, fy0, fx1 - fx0, fy1 - fy0, size * 0.09);
+  ctx.fillStyle = '#DD6B34';
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(fx0 + size * 0.10, fy1 - 1);
+  ctx.lineTo(fx0 + size * 0.02, fy1 + size * 0.09);
+  ctx.lineTo(fx0 + size * 0.19, fy1 - 1);
+  ctx.closePath();
+  ctx.fill();
+
+  // Checkmark inside the front bubble — reply sent
+  const cx = (fx0 + fx1) / 2, cy = (fy0 + fy1) / 2, w = size * 0.10;
+  ctx.strokeStyle = '#FFF6D9';
+  ctx.lineWidth = size * 0.045;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  ctx.moveTo(cx - w, cy);
+  ctx.lineTo(cx - w * 0.2, cy + w * 0.8);
+  ctx.lineTo(cx + w * 1.3, cy - w * 0.9);
   ctx.stroke();
-
-  // Envelope flap (terracotta gradient triangle)
-  const flapGrad = ctx.createLinearGradient(ex, ey - eh, ex, ey);
-  flapGrad.addColorStop(0, '#DD6B34');
-  flapGrad.addColorStop(1, '#FCB17A');
-  ctx.beginPath();
-  ctx.moveTo(ex, ey);
-  ctx.lineTo(ex + ew / 2, ey - eh * 0.86);
-  ctx.lineTo(ex + ew, ey);
-  ctx.closePath();
-  ctx.fillStyle = flapGrad;
-  ctx.fill();
-
-  // Heart at the flap peak
-  const hx = ex + ew / 2, hy = ey - eh * 0.32, hs = size * 0.15;
-  ctx.beginPath();
-  ctx.moveTo(hx, hy + hs * 0.32);
-  ctx.bezierCurveTo(hx - hs * 0.55, hy - hs * 0.42, hx - hs * 1.1, hy + hs * 0.28, hx, hy + hs * 0.95);
-  ctx.bezierCurveTo(hx + hs * 1.1, hy + hs * 0.28, hx + hs * 0.55, hy - hs * 0.42, hx, hy + hs * 0.32);
-  ctx.closePath();
-  ctx.fillStyle = '#FFF6D9';
-  ctx.fill();
 
   return c.toDataURL('image/png');
 }
