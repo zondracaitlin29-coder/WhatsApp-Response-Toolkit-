@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Reply Vault — Inbox Aide</title>
 <meta name="application-name" content="Reply Vault"/>
-<meta name="description" content="96 professional WhatsApp &amp; Facebook reply templates for South African small businesses, by Inbox Aide."/>
+<meta name="description" content="101 professional WhatsApp &amp; Facebook reply templates for South African small businesses, by Inbox Aide."/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Reply Vault"/>
@@ -82,7 +82,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const manifest = {
     name: "Reply Vault — Inbox Aide",
     short_name: "Reply Vault",
-    description: "96 Professional WhatsApp Response Templates for SA Small Businesses",
+    description: "101 Professional WhatsApp Response Templates for SA Small Businesses",
     start_url: ".", display: "standalone",
     background_color: "#FFF8EC", theme_color: "#FFF8EC", orientation: "portrait",
     icons: [
@@ -118,7 +118,7 @@ window.addEventListener('DOMContentLoaded', () => {
     --tap: rgba(221,107,52,0.08);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html { -webkit-text-size-adjust: 100%; }
+  html { -webkit-text-size-adjust: 100%; overflow-x: hidden; width: 100%; }
   body {
     background: var(--cream);
     color: var(--ink);
@@ -126,14 +126,6 @@ window.addEventListener('DOMContentLoaded', () => {
     font-size: 16px;
     min-height: 100vh;
     overflow-x: hidden;
-  }
-  body::before {
-    content: '';
-    position: fixed; inset: 0; z-index: 0;
-    background:
-      radial-gradient(ellipse at 12% 8%, rgba(252,177,122,0.22) 0%, transparent 50%),
-      radial-gradient(ellipse at 90% 90%, rgba(124,124,99,0.10) 0%, transparent 55%);
-    pointer-events: none;
   }
 
   .wrap { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; padding: 28px 18px 110px; }
@@ -162,15 +154,16 @@ window.addEventListener('DOMContentLoaded', () => {
   /* Sticky find bar: search + tabs travel with the thumb while scrolling */
   .find-bar {
     position: sticky; top: 0; z-index: 5;
-    background: var(--cream); padding-top: 10px; margin: 0 -18px 20px; padding-left: 18px; padding-right: 18px;
-    transition: box-shadow 0.2s;
+    background: transparent; padding-top: 10px; margin-bottom: 20px;
+    transition: box-shadow 0.2s, background 0.2s;
   }
   .find-bar.stuck { box-shadow: 0 8px 16px -8px rgba(42,32,22,0.18); background: rgba(255,248,236,0.96); backdrop-filter: blur(6px); }
 
   /* Category tabs */
   .tabs {
-    display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 6px;
+    display: flex; gap: 8px; overflow-x: auto; padding: 0 18px 4px; margin: 0 -18px 6px;
     scrollbar-width: none; -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
   }
   .tabs::-webkit-scrollbar { display: none; }
   .tab {
@@ -178,6 +171,7 @@ window.addEventListener('DOMContentLoaded', () => {
     border: 1.5px solid var(--border); background: var(--surface); color: var(--muted);
     transition: all 0.15s; font-family: 'DM Sans', sans-serif; font-weight: 600;
     white-space: nowrap; flex-shrink: 0; min-height: 44px; display: flex; align-items: center;
+    scroll-snap-align: start;
   }
   .tab:active { transform: scale(0.96); }
   .tab.active { background: var(--terracotta); border-color: var(--terracotta); color: #fff; box-shadow: 0 3px 10px rgba(221,107,52,0.35); }
@@ -367,7 +361,7 @@ window.addEventListener('DOMContentLoaded', () => {
   <div class="header-top">
     <div style="display:flex; align-items:center; gap:14px;">
       <img class="logo-mark" id="logoMark" alt="Inbox Aide logo"/>
-      <div class="badge" style="margin-bottom:0">96 Professional Templates</div>
+      <div class="badge" style="margin-bottom:0">Professional Templates</div>
     </div>
     <button class="settings-btn" id="settingsBtn" aria-label="Business details">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -488,8 +482,13 @@ const data = {
     { label: "Checking in after complaint resolution", text: "Hi [Customer Name], I just wanted to personally check in to make sure everything has been sorted to your satisfaction 😊 Your experience matters deeply to us and I want to make sure you\'re completely happy. Is there anything else I can help with? — [Business Name]" },
     { label: "Re-engaging a past customer", text: "Hi [Customer Name]! It\'s been a while and we\'ve been thinking of you 💛 We\'ve recently [launched something new / improved our service / have a special on] and thought of you immediately. Would love to have you back — can I share more details? — [Business Name]" },
   ],
-  "General Responses": [
+  "Greetings & Quick Replies": [
     { label: "Welcome – first message", text: "Hi [Customer Name], welcome and thank you so much for reaching out to [Business Name]! 😊 We\'re really glad you found us. How can we help you today?" },
+    { label: "Returning customer greeting", text: "Hi [Customer Name], welcome back! \ud83d\ude0a So good to hear from you again \u2014 what can I help you with this time?" },
+    { label: "Standard business hours notice", text: "Hi [Customer Name], thanks for your message! Our hours are [Mon-Fri, 9am-5pm] \u2014 I'll respond first thing on the next business day. Thank you for your patience \ud83d\ude0a \u2014 [Business Name]" },
+    { label: "Public holiday closure notice", text: "Hi [Customer Name], just a heads-up that [Business Name] will be closed on [public holiday] and back to normal hours on [date]. Thank you so much for understanding \u2014 see you soon!" },
+    { label: "Quick acknowledgment \u2013 confirmed", text: "Got it, thank you! \u2705 [detail confirmed] \u2014 all sorted on our end." },
+    { label: "Quick acknowledgment \u2013 no problem", text: "No problem at all! Happy to help whenever you're ready \ud83d\ude0a" },
     { label: "Be right back", text: "Hi [Customer Name], thank you for your message — I\'ve received it! 🙏 I\'ll get back to you within [1-2 hours / by end of day]. Please bear with me and I\'ll be with you shortly — [Business Name] 😊" },
     { label: "Out of office", text: "Hi there! Thank you for contacting [Business Name] 😊 I\'m currently unavailable but will respond to all messages on [date/day]. For urgent matters please contact [alternative contact]. I appreciate your patience — speak soon!" },
     { label: "Referral thank you", text: "Hi [Customer Name]! 🌟 I heard you referred [friend\'s name] to us and I just had to say — THANK YOU! Word of mouth is everything to a small business and I\'m genuinely so grateful. As a little thank you [offer if applicable] — [Business Name] 💛" },
@@ -874,9 +873,14 @@ const CATEGORY_FOR_KEYWORD = {
   'complaint':  'Complaints & Unhappy Customers',
   'follow':     'Follow Ups',
   'checkin':    'Follow Ups',
-  'welcome':    'General Responses',
-  'closed':     'General Responses',
-  'office':     'General Responses',
+  'welcome':    'Greetings & Quick Replies',
+  'greeting':   'Greetings & Quick Replies',
+  'closed':     'Greetings & Quick Replies',
+  'office':     'Greetings & Quick Replies',
+  'hours':      'Greetings & Quick Replies',
+  'holiday closure': 'Greetings & Quick Replies',
+  'quick reply':'Greetings & Quick Replies',
+  'confirmed':  'Greetings & Quick Replies',
   'collab':     'Collaborations',
   'collaboration':'Collaborations',
   'influencer': 'Collaborations',
