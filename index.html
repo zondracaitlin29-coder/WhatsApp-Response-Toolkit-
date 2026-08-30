@@ -139,13 +139,13 @@ window.addEventListener('DOMContentLoaded', () => {
   .wrap { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; padding: 28px 18px 110px; }
 
   /* Header */
-  .header-top { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
   .logo-mark {
     width: 56px; height: 56px; border-radius: 18px; flex-shrink: 0;
     box-shadow: 0 4px 14px rgba(184,80,31,0.28);
   }
   .badge {
-    display: inline-flex; align-items: center; gap: 6px;
+    display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
     background: var(--terracotta); border: none; color: #fff;
     border-radius: 100px; padding: 6px 15px; margin-bottom: 14px;
     font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
@@ -199,19 +199,28 @@ window.addEventListener('DOMContentLoaded', () => {
   /* Response cards */
   .cards { display: flex; flex-direction: column; gap: 14px; margin-bottom: 40px; }
   .card {
-    background: var(--surface); border: 1.5px solid var(--border); border-left: 5px solid var(--peach);
-    border-radius: 16px; padding: 20px; cursor: pointer;
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: 16px; padding: 20px; cursor: default;
     transition: all 0.15s; position: relative; box-shadow: 0 2px 8px rgba(42,32,22,0.05);
   }
-  .card:active { transform: scale(0.99); background: var(--tap); }
-  .card:hover { border-color: var(--terracotta-border); border-left-color: var(--terracotta); }
-  .card.copied { border-color: var(--terracotta); border-left-color: var(--terracotta); background: var(--terracotta-dim); }
+  .card:hover { border-color: var(--terracotta-border); }
+  .card.copied { border-color: var(--terracotta); background: var(--terracotta-dim); }
   .card-tag {
-    font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--terracotta-deep); margin-bottom: 10px;
+    margin-bottom: 10px;
   }
-  .card-label { flex: 1; }
+  .card-label {
+    font-size: 15.5px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em;
+  }
   .card p { font-size: 16px; line-height: 1.7; color: var(--ink); font-weight: 450; }
+  .card-preview {
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .card-preview.expanded { display: block; -webkit-line-clamp: unset; overflow: visible; }
+  .expand-btn {
+    display: none; background: none; border: none; padding: 6px 0 0; margin: 0;
+    color: var(--terracotta-deep); font-family: 'DM Sans', sans-serif; font-size: 13.5px;
+    font-weight: 700; cursor: pointer; min-height: 32px;
+  }
 
   /* Star / favorite toggle — lives in the action row so it never crowds the content above */
   .star-btn {
@@ -234,19 +243,54 @@ window.addEventListener('DOMContentLoaded', () => {
   .search-wrap input:focus { border-color: var(--terracotta); }
   .search-wrap input::placeholder { color: var(--muted); font-weight: 400; }
 
-  /* Quick Vault Panel */
-  .vault-panel { background: var(--peach-soft); border: 1.5px solid var(--terracotta-border); border-radius: 18px; padding: 18px 18px; margin-bottom: 22px; }
-  .vault-header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
-  .vault-title { color: var(--terracotta-deep); font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 800; }
-  .vault-sub { color: var(--muted); font-size: 11.5px; font-weight: 500; flex: 1; min-width: 140px; }
-  .vault-fields { display: flex; flex-direction: column; gap: 10px; }
-  .vault-field { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .vault-field label { color: var(--terracotta-deep); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; min-width: 170px; font-weight: 700; }
-  .vault-field input { flex: 1; min-width: 180px; min-height: 46px; background: #ffffff; border: 1.5px solid var(--terracotta-border); border-radius: 12px; padding: 10px 14px; color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none; transition: border 0.2s; }
+  /* Settings button — a labeled pill, self-explanatory without needing a separate hint */
+  .settings-btn {
+    display: flex; align-items: center; gap: 7px; flex-shrink: 0; position: relative;
+    height: 44px; padding: 0 16px 0 12px; border-radius: 100px;
+    background: var(--surface); border: 1.5px solid var(--border); cursor: pointer;
+    color: var(--terracotta-deep); font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 700;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+  .settings-btn:active { transform: scale(0.96); }
+  .settings-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .settings-badge {
+    position: absolute; top: -4px; right: -4px; background: var(--terracotta); color: #fff;
+    font-size: 10px; font-weight: 800; border-radius: 100px; min-width: 17px; height: 17px;
+    display: flex; align-items: center; justify-content: center; padding: 0 3px;
+    border: 2px solid var(--cream);
+  }
+
+  /* Business-details bottom sheet */
+  .vault-overlay {
+    position: fixed; inset: 0; background: rgba(42,32,22,0.45); z-index: 50;
+    display: flex; align-items: flex-end; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s;
+  }
+  .vault-overlay.open { opacity: 1; pointer-events: auto; }
+  .vault-sheet {
+    background: var(--cream); width: 100%; max-width: 560px;
+    border-radius: 24px 24px 0 0; padding: 22px 20px 28px;
+    box-shadow: 0 -8px 30px rgba(42,32,22,0.22);
+    transform: translateY(24px); transition: transform 0.25s;
+    max-height: 88vh; overflow-y: auto;
+  }
+  .vault-overlay.open .vault-sheet { transform: translateY(0); }
+  .vault-sheet-header { margin-bottom: 6px; }
+  .vault-sheet-title { font-size: 18px; font-weight: 700; color: var(--ink); }
+  .vault-sheet-sub { color: var(--muted); font-size: 13px; font-weight: 500; line-height: 1.55; margin: 6px 0 20px; }
+  .vault-fields { display: flex; flex-direction: column; gap: 14px; }
+  .vault-field label { display: block; color: var(--terracotta-deep); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+  .vault-field-help { color: var(--muted); font-size: 12.5px; font-weight: 500; line-height: 1.5; margin: 0 0 8px; }
+  .vault-field input { width: 100%; min-height: 50px; background: #ffffff; border: 1.5px solid var(--terracotta-border); border-radius: 12px; padding: 10px 14px; color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none; transition: border 0.2s; }
   .vault-field input:focus { border-color: var(--terracotta); }
   .vault-field input::placeholder { color: var(--muted); }
-  .biz-status { font-size: 11.5px; color: var(--terracotta-deep); opacity: 0; transition: opacity 0.3s; white-space: nowrap; font-weight: 700; }
-  .biz-status.visible { opacity: 1; }
+  .vault-sheet-done {
+    width: 100%; min-height: 52px; margin-top: 20px; background: var(--terracotta); border: none;
+    border-radius: 12px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 15.5px;
+    font-weight: 700; cursor: pointer;
+  }
+  .vault-sheet-done:active { transform: scale(0.98); }
+  .vault-privacy-note { color: var(--muted); font-size: 12px; font-weight: 500; margin-top: 12px; text-align: center; }
 
   /* Dynamic variable inputs */
   .dyn-inputs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); width: 100%; }
@@ -260,7 +304,7 @@ window.addEventListener('DOMContentLoaded', () => {
   .btn-copy { flex: 1; min-height: 52px; padding: 0; background: var(--surface); border: 1.5px solid var(--terracotta-border); border-radius: 12px; color: var(--terracotta-deep); font-family: 'DM Sans', sans-serif; font-size: 15.5px; font-weight: 700; cursor: pointer; transition: all 0.15s; letter-spacing: 0.01em; }
   .btn-copy:active { transform: scale(0.97); background: var(--terracotta-dim); }
   .btn-copy.done { background: var(--terracotta); border-color: var(--terracotta); color: #fff; }
-  .btn-send { flex: 1; min-height: 52px; padding: 0; background: var(--whatsapp); border: none; border-radius: 12px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 15.5px; font-weight: 700; cursor: pointer; transition: all 0.15s; letter-spacing: 0.01em; text-decoration: none; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 10px rgba(37,211,102,0.3); }
+  .btn-send { flex: 1; min-height: 52px; padding: 0; background: var(--whatsapp); border: 1.5px solid var(--whatsapp); border-radius: 12px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 15.5px; font-weight: 700; cursor: pointer; transition: all 0.15s; letter-spacing: 0.01em; text-decoration: none; display: flex; align-items: center; justify-content: center; }
   .btn-send:active { transform: scale(0.97); }
 
   /* Count */
@@ -307,10 +351,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   .card { animation: fadeIn 0.3s ease both; }
-
-  @media (max-width: 380px) {
-    .vault-field label { min-width: 100%; }
-  }
 </style>
 </head>
 <body>
@@ -325,35 +365,23 @@ window.addEventListener('DOMContentLoaded', () => {
 
   <!-- Header -->
   <div class="header-top">
-    <img class="logo-mark" id="logoMark" alt="Inbox Aide logo"/>
-    <div class="badge" style="margin-bottom:0">96 Professional Templates</div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <img class="logo-mark" id="logoMark" alt="Inbox Aide logo"/>
+      <div class="badge" style="margin-bottom:0">96 Professional Templates</div>
+    </div>
+    <button class="settings-btn" id="settingsBtn" aria-label="Business details">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2" fill="var(--surface)"/>
+        <line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2" fill="var(--surface)"/>
+        <line x1="4" y1="18" x2="20" y2="18"/><circle cx="7" cy="18" r="2" fill="var(--surface)"/>
+      </svg>
+      Business details
+      <span class="settings-badge" id="settingsBadge" style="display:none"></span>
+    </button>
   </div>
   <div style="margin-bottom: 28px;">
     <h1>Reply <em>Vault</em></h1>
     <p class="subtitle">Turn repetitive customer messages into one-tap replies, by Inbox Aide.</p>
-  </div>
-
-  <!-- Quick Vault -->
-  <div class="vault-panel">
-    <div class="vault-header">
-      <span class="vault-title">Quick Vault</span>
-      <span class="vault-sub">Saved details auto-apply instantly. 100% private — stored only on this device, never sent to a server.</span>
-      <span class="biz-status" id="vaultStatus"></span>
-    </div>
-    <div class="vault-fields">
-      <div class="vault-field">
-        <label for="bizNameInput">Business Name</label>
-        <input type="text" id="bizNameInput" placeholder="e.g. Lash by Zondra" oninput="saveVault()"/>
-      </div>
-      <div class="vault-field">
-        <label for="bankingInput">Banking Details</label>
-        <input type="text" id="bankingInput" placeholder="e.g. FNB · Acc: 123456 · Ref: Your Name" oninput="saveVault()"/>
-      </div>
-      <div class="vault-field">
-        <label for="priceListInput">Price List / Catalogue</label>
-        <input type="text" id="priceListInput" placeholder="e.g. selar.co/yourstore or website link" oninput="saveVault()"/>
-      </div>
-    </div>
   </div>
 
   <!-- Sticky search + tabs: stays within thumb reach while browsing -->
@@ -380,6 +408,35 @@ window.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <button class="scroll-top" id="scrollTopBtn" aria-label="Back to top" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</button>
+
+<!-- Business details bottom sheet -->
+<div class="vault-overlay" id="vaultOverlay">
+  <div class="vault-sheet">
+    <div class="vault-sheet-header">
+      <div class="vault-sheet-title">Your business details</div>
+      <p class="vault-sheet-sub">Fill these in once — they auto-fill into templates that need them, just like before.</p>
+    </div>
+    <div class="vault-fields">
+      <div class="vault-field">
+        <label for="bizNameInput">Business name</label>
+        <p class="vault-field-help">Fills in wherever a template signs off with your business name.</p>
+        <input type="text" id="bizNameInput" placeholder="Type your business name" oninput="saveVault()"/>
+      </div>
+      <div class="vault-field">
+        <label for="bankingInput">Banking details</label>
+        <p class="vault-field-help">Fills in wherever a template asks for proof-of-payment or EFT details — include your bank, account number, and payment reference.</p>
+        <input type="text" id="bankingInput" placeholder="Bank, account number, and reference" oninput="saveVault()"/>
+      </div>
+      <div class="vault-field">
+        <label for="priceListInput">Price list / catalogue</label>
+        <p class="vault-field-help">Fills in wherever a template points customers to your prices — paste a link to your price list, catalogue, or website.</p>
+        <input type="text" id="priceListInput" placeholder="Link to your price list or catalogue" oninput="saveVault()"/>
+      </div>
+    </div>
+    <button class="vault-sheet-done" id="vaultDoneBtn">Done</button>
+    <p class="vault-privacy-note">100% private — stored only on this device, never sent to a server.</p>
+  </div>
+</div>
 
 <script>
 const data = {
@@ -560,9 +617,20 @@ function saveVault() {
 
 function updateVaultStatus() {
   const count = [vault.biz, vault.banking, vault.price].filter(Boolean).length;
-  const el = document.getElementById('vaultStatus');
-  el.textContent = count > 0 ? `${count}/3 saved` : '';
-  el.classList.toggle('visible', count > 0);
+  const badge = document.getElementById('settingsBadge');
+  if (count > 0) {
+    badge.textContent = count;
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function openVaultSheet() {
+  document.getElementById('vaultOverlay').classList.add('open');
+}
+function closeVaultSheet() {
+  document.getElementById('vaultOverlay').classList.remove('open');
 }
 
 // Vault-managed placeholders — these are resolved globally, not via inline inputs
@@ -705,12 +773,25 @@ function renderCards() {
         <span class="card-label">${item.label}</span>
       </div>
       <p class="card-preview">${vaultResolved.replace(/\n/g, '<br/>')}</p>
+      <button class="expand-btn">Show full message</button>
       <div class="card-actions">
         <button class="star-btn${isFav ? ' active' : ''}" aria-label="${isFav ? 'Remove from favorites' : 'Add to favorites'}">${isFav ? '★' : '☆'}</button>
         <button class="btn-copy" id="copy-${i}">Copy</button>
         <a class="btn-send" id="wa-${i}" href="https://wa.me/?text=${encodeURIComponent(vaultResolved)}" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     `;
+
+    const previewEl = card.querySelector('.card-preview');
+    const expandBtn = card.querySelector('.expand-btn');
+    function refreshExpandVisibility() {
+      if (previewEl.classList.contains('expanded')) return;
+      expandBtn.style.display = previewEl.scrollHeight > previewEl.clientHeight + 1 ? 'block' : 'none';
+    }
+    expandBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const expanded = previewEl.classList.toggle('expanded');
+      expandBtn.textContent = expanded ? 'Show less' : 'Show full message';
+    });
 
     card.querySelector('.star-btn').addEventListener('click', e => {
       e.stopPropagation();
@@ -725,6 +806,7 @@ function renderCards() {
         inputValues[input.dataset.bracket] = input.value;
         const preview = card.querySelector('.card-preview');
         if (preview) preview.innerHTML = getCardText().replace(/\n/g, '<br/>');
+        refreshExpandVisibility();
         const waLink = card.querySelector(`#wa-${i}`);
         if (waLink) waLink.href = 'https://wa.me/?text=' + encodeURIComponent(getCardText());
       });
@@ -743,6 +825,7 @@ function renderCards() {
     });
 
     container.appendChild(card);
+    refreshExpandVisibility();
   });
 }
 
@@ -871,6 +954,13 @@ function filterCards() {
 loadVault();
 buildTabs();
 renderCards();
+
+// Business-details sheet: open/close
+document.getElementById('settingsBtn').addEventListener('click', openVaultSheet);
+document.getElementById('vaultDoneBtn').addEventListener('click', closeVaultSheet);
+document.getElementById('vaultOverlay').addEventListener('click', e => {
+  if (e.target.id === 'vaultOverlay') closeVaultSheet();
+});
 
 // Scroll-to-top button + sticky find-bar shadow (one-handed scroll aids)
 const scrollTopBtn = document.getElementById('scrollTopBtn');
