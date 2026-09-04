@@ -682,9 +682,12 @@ function buildTabs() {
   });
   // Jump the highlighted tab into view so a search doesn't feel disconnected
   // from the category it landed on, even if that tab is scrolled off-screen.
+  // Scrolled manually (not via scrollIntoView) so only this strip moves —
+  // scrollIntoView can walk up and shift the whole page instead.
   const activeTab = container.querySelector(".tab.active");
   if (activeTab) {
-    activeTab.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    const target = activeTab.offsetLeft - (container.clientWidth - activeTab.offsetWidth) / 2;
+    container.scrollTo({ left: target, behavior: "smooth" });
   }
 }
 
