@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Reply Vault — Inbox Aide</title>
 <meta name="application-name" content="Reply Vault"/>
-<meta name="description" content="101 professional WhatsApp &amp; Facebook reply templates for South African small businesses, by Inbox Aide."/>
+<meta name="description" content="106 professional WhatsApp &amp; Facebook reply templates for South African small businesses, by Inbox Aide."/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Reply Vault"/>
@@ -82,7 +82,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const manifest = {
     name: "Reply Vault — Inbox Aide",
     short_name: "Reply Vault",
-    description: "101 Professional WhatsApp Response Templates for SA Small Businesses",
+    description: "106 Professional WhatsApp Response Templates for SA Small Businesses",
     start_url: ".", display: "standalone",
     background_color: "#FFF8EC", theme_color: "#FFF8EC", orientation: "portrait",
     icons: [
@@ -200,8 +200,25 @@ window.addEventListener('DOMContentLoaded', () => {
   .card:hover { border-color: var(--terracotta-border); }
   .card.copied { border-color: var(--terracotta); background: var(--terracotta-dim); }
   .card-tag {
-    margin-bottom: 10px;
+    margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
   }
+  .edit-btn {
+    background: none; border: none; padding: 4px 0; margin: 0; flex-shrink: 0;
+    color: var(--terracotta-deep); font-family: 'DM Sans', sans-serif; font-size: 13px;
+    font-weight: 700; cursor: pointer; min-height: 28px; text-decoration: underline;
+  }
+  .custom-intro {
+    color: var(--muted); font-size: 13.5px; font-weight: 500; line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .custom-intro strong { color: var(--terracotta-deep); font-weight: 700; }
+  .add-template-btn {
+    width: 100%; min-height: 56px; margin-bottom: 14px;
+    background: transparent; border: 2px dashed var(--terracotta-border); border-radius: 16px;
+    color: var(--terracotta-deep); font-family: 'DM Sans', sans-serif; font-size: 15.5px;
+    font-weight: 700; cursor: pointer; transition: all 0.15s;
+  }
+  .add-template-btn:active { transform: scale(0.98); background: var(--terracotta-dim); }
   .card-label {
     font-size: 15.5px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em;
   }
@@ -275,8 +292,14 @@ window.addEventListener('DOMContentLoaded', () => {
   .vault-fields { display: flex; flex-direction: column; gap: 14px; }
   .vault-field label { display: block; color: var(--terracotta-deep); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
   .vault-field-help { color: var(--muted); font-size: 12.5px; font-weight: 500; line-height: 1.5; margin: 0 0 8px; }
-  .vault-field input { width: 100%; min-height: 50px; background: #ffffff; border: 1.5px solid var(--terracotta-border); border-radius: 12px; padding: 10px 14px; color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none; transition: border 0.2s; }
-  .vault-field input:focus { border-color: var(--terracotta); }
+  .vault-field input, .vault-field textarea { width: 100%; min-height: 50px; background: #ffffff; border: 1.5px solid var(--terracotta-border); border-radius: 12px; padding: 10px 14px; color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none; transition: border 0.2s; }
+  .vault-field textarea { resize: vertical; line-height: 1.5; }
+  .template-delete-btn {
+    width: 100%; min-height: 44px; margin-top: 10px; background: none; border: none;
+    color: #B8501F; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700;
+    cursor: pointer; text-decoration: underline;
+  }
+  .vault-field input:focus, .vault-field textarea:focus { border-color: var(--terracotta); }
   .vault-field input::placeholder { color: var(--muted); }
   .vault-sheet-done {
     width: 100%; min-height: 52px; margin-top: 20px; background: var(--terracotta); border: none;
@@ -317,6 +340,17 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   .reminder-title { color: var(--sage-deep); font-size: 12.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
   .reminder-note p:last-child { color: #45402f; font-size: 14.5px; font-weight: 500; line-height: 1.7; }
+
+  /* Quiet cross-sell banner — only shown at the end of The Essentials */
+  .refresh-promo {
+    background: var(--peach-soft); border: 1.5px solid var(--terracotta-border);
+    border-radius: 16px; padding: 18px 20px; margin-top: 4px;
+  }
+  .refresh-promo p { color: var(--ink); font-size: 14px; font-weight: 500; line-height: 1.6; margin-bottom: 10px; }
+  .refresh-promo a {
+    display: inline-block; color: var(--terracotta-deep); font-weight: 700; font-size: 14px;
+    text-decoration: none; border-bottom: 1.5px solid var(--terracotta-deep); padding-bottom: 1px;
+  }
 
   /* Install banner */
   .install-banner { background: var(--terracotta); border: none; border-radius: 16px; padding: 15px 18px; margin-bottom: 22px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 14px rgba(221,107,52,0.3); }
@@ -432,8 +466,37 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 
+<!-- Add / edit a custom template -->
+<div class="vault-overlay" id="templateOverlay">
+  <div class="vault-sheet">
+    <div class="vault-sheet-header">
+      <div class="vault-sheet-title" id="templateSheetTitle">Add a template</div>
+      <p class="vault-sheet-sub">Write your own quick reply — use [Brackets] for anything that changes each time, and it'll get the same fill-in fields as the rest.</p>
+    </div>
+    <div class="vault-fields">
+      <div class="vault-field">
+        <label for="templateLabelInput">Label</label>
+        <input type="text" id="templateLabelInput" placeholder="e.g. Shipping to other provinces"/>
+      </div>
+      <div class="vault-field">
+        <label for="templateTextInput">Message</label>
+        <textarea id="templateTextInput" placeholder="Hi [Customer Name]! ..." rows="5"></textarea>
+      </div>
+    </div>
+    <button class="vault-sheet-done" id="templateSaveBtn">Save</button>
+    <button class="template-delete-btn" id="templateDeleteBtn" style="display:none">Delete this template</button>
+  </div>
+</div>
+
 <script>
 const data = {
+  "The Essentials": [
+    { label: "How much does it cost?", text: "Hi [Customer Name]! Thanks so much for asking \ud83d\ude0a [service/product] is [price]. Let me know if you\'d like to go ahead or have any questions \u2014 happy to help! \u2014 [Business Name]" },
+    { label: "What are your hours?", text: "Hi [Customer Name]! Our hours are [e.g. Mon-Fri, 9am-5pm]. Feel free to pop through or message anytime \u2014 we\'ll get back to you as soon as we can \ud83d\ude0a \u2014 [Business Name]" },
+    { label: "Do you deliver?", text: "Hi [Customer Name]! Yes, we do deliver \ud83d\ude0a Delivery to [area] is [fee / free], and usually takes [timeframe]. Would you like to go ahead?" },
+    { label: "Is this available?", text: "Hi [Customer Name]! Yes, [item] is still available \ud83d\ude0a Would you like me to set it aside for you, or are you ready to go ahead?" },
+    { label: "How can I pay?", text: "Hi [Customer Name]! You can pay via [EFT / card / cash on collection] \u2014 [Bank details here]. Once paid, just send proof and I\'ll get things moving right away \ud83d\ude0a" },
+  ],
   "Pricing & Quotes": [
     { label: "Price enquiry – friendly", text: "Hi [Customer Name]! 😊 Thanks so much for reaching out — great to hear from you! Our prices start from R[amount] depending on what you need. I\'d love to help you find the best option. Could you tell me a bit more about what you\'re looking for? — [Business Name]" },
     { label: "Price enquiry – professional", text: "Good day [Customer Name], thank you for your enquiry — I appreciate you reaching out! Please find our pricing details below:\n\n[List your services and prices here]\n\nFeel free to reach out if you have any questions. I look forward to assisting you — [Business Name] 😊" },
@@ -567,6 +630,7 @@ let activeCategory = "Pricing & Quotes";
 let searchTerm = "";
 let matchedCategory = null;
 let showingFavorites = false;
+let showingCustom = false;
 
 // ── Favorites ────────────────────────────────────────────────
 const FAVORITES_KEY = 'wrt_favorites';
@@ -585,6 +649,68 @@ function toggleFavorite(id) {
   if (favorites.has(id)) favorites.delete(id);
   else favorites.add(id);
   saveFavorites();
+  renderCards();
+  buildTabs();
+}
+
+// ── My Templates (user-created) ─────────────────────────────
+const CUSTOM_KEY = 'wrt_custom_templates';
+let customTemplates = [];
+try {
+  customTemplates = JSON.parse(localStorage.getItem(CUSTOM_KEY) || '[]');
+} catch (e) { customTemplates = []; }
+let editingCustomId = null;
+
+function saveCustomTemplates() {
+  localStorage.setItem(CUSTOM_KEY, JSON.stringify(customTemplates));
+}
+function nextCustomId() {
+  return 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
+function openTemplateSheet(editId) {
+  editingCustomId = editId || null;
+  const titleEl = document.getElementById('templateSheetTitle');
+  const labelInput = document.getElementById('templateLabelInput');
+  const textInput = document.getElementById('templateTextInput');
+  const deleteBtn = document.getElementById('templateDeleteBtn');
+  if (editId) {
+    const item = customTemplates.find(t => t.id === editId);
+    titleEl.textContent = 'Edit template';
+    labelInput.value = item ? item.label : '';
+    textInput.value = item ? item.text : '';
+    deleteBtn.style.display = 'block';
+  } else {
+    titleEl.textContent = 'Add a template';
+    labelInput.value = '';
+    textInput.value = '';
+    deleteBtn.style.display = 'none';
+  }
+  document.getElementById('templateOverlay').classList.add('open');
+}
+function closeTemplateSheet() {
+  document.getElementById('templateOverlay').classList.remove('open');
+  editingCustomId = null;
+}
+function saveTemplateFromSheet() {
+  const label = document.getElementById('templateLabelInput').value.trim();
+  const text = document.getElementById('templateTextInput').value.trim();
+  if (!label || !text) return;
+  if (editingCustomId) {
+    const item = customTemplates.find(t => t.id === editingCustomId);
+    if (item) { item.label = label; item.text = text; }
+  } else {
+    customTemplates.push({ id: nextCustomId(), label, text });
+  }
+  saveCustomTemplates();
+  closeTemplateSheet();
+  renderCards();
+  buildTabs();
+}
+function deleteTemplateFromSheet() {
+  if (!editingCustomId) return;
+  customTemplates = customTemplates.filter(t => t.id !== editingCustomId);
+  saveCustomTemplates();
+  closeTemplateSheet();
   renderCards();
   buildTabs();
 }
@@ -653,6 +779,7 @@ function buildTabs() {
   favBtn.textContent = "★ Favorites" + (favorites.size ? ` (${favorites.size})` : "");
   favBtn.onclick = () => {
     showingFavorites = true;
+    showingCustom = false;
     searchTerm = "";
     matchedCategory = null;
     document.getElementById("searchInput").value = "";
@@ -661,9 +788,23 @@ function buildTabs() {
   };
   container.appendChild(favBtn);
 
+  const customBtn = document.createElement("button");
+  customBtn.className = "tab fav-tab" + (showingCustom ? " active" : "");
+  customBtn.textContent = "+ My Templates" + (customTemplates.length ? ` (${customTemplates.length})` : "");
+  customBtn.onclick = () => {
+    showingCustom = true;
+    showingFavorites = false;
+    searchTerm = "";
+    matchedCategory = null;
+    document.getElementById("searchInput").value = "";
+    renderCards();
+    buildTabs();
+  };
+  container.appendChild(customBtn);
+
   Object.keys(data).forEach(cat => {
     const btn = document.createElement("button");
-    const isActive = !showingFavorites && cat === activeCategory && (!searchTerm || matchedCategory === cat);
+    const isActive = !showingFavorites && !showingCustom && cat === activeCategory && (!searchTerm || matchedCategory === cat);
     // A "jump" is when search itself landed us on this tab (not a manual tap) —
     // play the same highlight pulse a tap would give, so it reads as intentional.
     const isSearchJump = isActive && !!searchTerm && matchedCategory === cat;
@@ -672,6 +813,7 @@ function buildTabs() {
     btn.onclick = () => {
       activeCategory = cat;
       showingFavorites = false;
+      showingCustom = false;
       searchTerm = "";
       matchedCategory = null;
       document.getElementById("searchInput").value = "";
@@ -698,7 +840,9 @@ function renderCards() {
   container.innerHTML = "";
 
   let pool = [];
-  if (showingFavorites) {
+  if (showingCustom) {
+    pool = customTemplates.map(item => ({ ...item, _cat: "My Templates", _custom: true }));
+  } else if (showingFavorites) {
     Object.entries(data).forEach(([cat, arr]) => arr.forEach(item => {
       const id = favId(cat, item.label);
       if (favorites.has(id)) pool.push({ ...item, _cat: cat });
@@ -719,16 +863,35 @@ function renderCards() {
     pool = (data[activeCategory] || []).map(item => ({ ...item, _cat: activeCategory }));
   }
 
-  if (showingFavorites) {
+  if (showingCustom) {
+    countEl.innerHTML = `<span>${pool.length}</span> custom template${pool.length !== 1 ? "s" : ""}`;
+  } else if (showingFavorites) {
     countEl.innerHTML = `<span>${pool.length}</span> favorite${pool.length !== 1 ? "s" : ""} saved`;
   } else {
     countEl.innerHTML = `<span>${pool.length}</span> response${pool.length !== 1 ? "s" : ""} ${searchTerm ? "found" : "in this category"}`;
   }
 
+  // "My Templates" always shows a short explainer + the add button, even when the list is empty
+  if (showingCustom) {
+    const intro = document.createElement("p");
+    intro.className = "custom-intro";
+    intro.innerHTML = `Write your own replies here. Use <strong>[Brackets]</strong> for anything that changes each time — e.g. [Customer Name] — and it'll get a fill-in field automatically, just like the built-in templates.`;
+    container.appendChild(intro);
+
+    const addBtn = document.createElement("button");
+    addBtn.className = "add-template-btn";
+    addBtn.textContent = "+ Add a template";
+    addBtn.addEventListener("click", () => openTemplateSheet());
+    container.appendChild(addBtn);
+  }
+
   if (pool.length === 0) {
-    container.innerHTML = showingFavorites
+    const emptyMsg = showingCustom
+      ? '<div class="empty">No custom templates yet. Tap "+ Add a template" above to create your first one.</div>'
+      : showingFavorites
       ? '<div class="empty">No favorites yet. Tap the star on any response to save it here.</div>'
       : '<div class="empty">No responses found. Try a different search term.</div>';
+    container.insertAdjacentHTML('beforeend', emptyMsg);
     return;
   }
 
@@ -773,6 +936,7 @@ function renderCards() {
       ${dynHTML}
       <div class="card-tag">
         <span class="card-label">${item.label}</span>
+        ${item._custom ? `<button class="edit-btn">Edit</button>` : ''}
       </div>
       <p class="card-preview">${vaultResolved.replace(/\n/g, '<br/>')}</p>
       <button class="expand-btn">Show full message</button>
@@ -782,6 +946,13 @@ function renderCards() {
         <a class="btn-send" id="wa-${i}" href="https://wa.me/?text=${encodeURIComponent(vaultResolved)}" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     `;
+
+    if (item._custom) {
+      card.querySelector('.edit-btn').addEventListener('click', e => {
+        e.stopPropagation();
+        openTemplateSheet(item.id);
+      });
+    }
 
     const previewEl = card.querySelector('.card-preview');
     const expandBtn = card.querySelector('.expand-btn');
@@ -829,6 +1000,17 @@ function renderCards() {
     container.appendChild(card);
     refreshExpandVisibility();
   });
+
+  // Quiet cross-sell — only on The Essentials, only when browsing it directly (not search/favorites)
+  if (activeCategory === "The Essentials" && !showingFavorites && !showingCustom && !searchTerm.trim()) {
+    const promo = document.createElement("div");
+    promo.className = "refresh-promo";
+    promo.innerHTML = `
+      <p>Want these written in your exact voice? The Customer Reply Refresh gets you 5 custom replies, written for your business — R100.</p>
+      <a href="https://wa.me/REPLACE_WITH_YOUR_NUMBER?text=Hi%2C%20I%27d%20like%20to%20book%20a%20Customer%20Reply%20Refresh" target="_blank" rel="noopener">Book yours →</a>
+    `;
+    container.appendChild(promo);
+  }
 }
 
 function doCopy(card, i, text) {
@@ -861,6 +1043,9 @@ const SYNONYMS = {
 
 // Keyword → category shortcut: typing one of these jumps straight to its category tab
 const CATEGORY_FOR_KEYWORD = {
+  'essentials': 'The Essentials',
+  'common questions': 'The Essentials',
+  'faq':        'The Essentials',
   'price':      'Pricing & Quotes',
   'quote':      'Pricing & Quotes',
   'booking':    'Availability & Bookings',
@@ -924,6 +1109,7 @@ function filterCards() {
   searchTerm = document.getElementById("searchInput").value.toLowerCase().trim();
   matchedCategory = CATEGORY_FOR_KEYWORD[searchTerm] || null;
   showingFavorites = false;
+  showingCustom = false;
 
   // No explicit mapping? Find whichever category holds the most matches —
   // if one category is the clear front-runner, jump there too, so the tabs
@@ -967,6 +1153,13 @@ document.getElementById('settingsBtn').addEventListener('click', openVaultSheet)
 document.getElementById('vaultDoneBtn').addEventListener('click', closeVaultSheet);
 document.getElementById('vaultOverlay').addEventListener('click', e => {
   if (e.target.id === 'vaultOverlay') closeVaultSheet();
+});
+
+// Add/edit custom template sheet
+document.getElementById('templateSaveBtn').addEventListener('click', saveTemplateFromSheet);
+document.getElementById('templateDeleteBtn').addEventListener('click', deleteTemplateFromSheet);
+document.getElementById('templateOverlay').addEventListener('click', e => {
+  if (e.target.id === 'templateOverlay') closeTemplateSheet();
 });
 
 // Scroll-to-top button + sticky find-bar shadow (one-handed scroll aids)
