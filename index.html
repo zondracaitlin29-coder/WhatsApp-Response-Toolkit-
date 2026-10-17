@@ -994,7 +994,7 @@ function renderCards() {
     // WhatsApp send — update href on click to capture latest input values
     card.querySelector(`#wa-${i}`).addEventListener('click', e => {
       e.stopPropagation();
-      e.currentTarget.href = 'https://wa.me/?text=27768260594' + encodeURIComponent(getCardText());
+      e.currentTarget.href = 'https://wa.me/?text=' + encodeURIComponent(getCardText());
     });
 
     container.appendChild(card);
@@ -1007,7 +1007,7 @@ function renderCards() {
     promo.className = "refresh-promo";
     promo.innerHTML = `
       <p>Want these written in your exact voice? The Customer Reply Refresh gets you 5 custom replies, written for your business — R100.</p>
-      <a href="https://wa.me/REPLACE_WITH_YOUR_NUMBER?text=Hi%2C%20I%27d%20like%20to%20book%20a%20Customer%20Reply%20Refresh" target="_blank" rel="noopener">Book yours →</a>
+      <a href="https://wa.me/27768260594?text=Hi%2C%20I%27d%20like%20to%20book%20a%20Customer%20Reply%20Refresh" target="_blank" rel="noopener">Book yours →</a>
     `;
     container.appendChild(promo);
   }
